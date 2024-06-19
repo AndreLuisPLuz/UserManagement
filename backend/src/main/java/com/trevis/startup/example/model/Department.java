@@ -18,4 +18,7 @@ public class Department extends BaseModel {
 
     @OneToMany(mappedBy = "department")
     private Set<User> users;
+
+    @OneToMany(mappedBy = "department")
+    private Set<Service> services;
 }
