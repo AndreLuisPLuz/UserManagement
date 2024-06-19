@@ -1,21 +1,20 @@
 
 Setor --> Departament
 
--> "message": String
--> "messages": String[]
--> "message": String, "data": T[]
-
-
-
-structure/DataResult:
-         /ArrayMessageResult:
-         /SimpleMessageResult:
+structure/DataResult:           "message": String, "data": T[]
+         /ArrayMessageResult:   "messages": String[]
+         /SimpleMessageResult:  "message": String
 
     essas interfaces serao utilizadas como forma de return para o frontend,
     todas contendo duas opção: 
-    OK: se tudo der certo ele retorna um objeto de qualquer tipo para o front(exemplo: em um get userId, 
-    ele retorna um User encontrado).
+    OK: se tudo der certo.
+        DataResult: retorna uma mensagem e objeto de qualquer tipo para o front(exemplo: em um get userId, ele retorna um User encontrado).
+        ArrayMessageResult: retorna um array de mensagens.
+        SimpleMessageResult: retorna apenas uma mensagem.
+
+    Todos os return de erro não iguais.
     Error: Caso algo de errado vc retorna passan o errorcode (401, 403) e a mensagem do erro.
+
 
 model/BaseModel:
     essa model vai ser utilizada como base para todas as models, ela cria as colunas

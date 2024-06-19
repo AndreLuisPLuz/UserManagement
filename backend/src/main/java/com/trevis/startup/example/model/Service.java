@@ -25,4 +25,47 @@ public class Service extends BaseModel {
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getIsInternal() {
+        return isInternal;
+    }
+
+    public void setIsInternal(String isInternal) {
+        this.isInternal = isInternal;
+    }
+
+    public User getManager() {
+        return manager;
+    }
+
+    public void setManager(User manager) {
+        this.manager = manager;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+
+    
 }
