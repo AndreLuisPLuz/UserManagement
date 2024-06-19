@@ -29,6 +29,10 @@ public class BaseModel {
         updatedAt = null;
     }
 
+    public void setId(Long id){
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
