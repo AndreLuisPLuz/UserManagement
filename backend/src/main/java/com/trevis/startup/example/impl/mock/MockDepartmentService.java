@@ -24,7 +24,7 @@ public class MockDepartmentService implements DepartmentService {
         department2.setAcronym("BDO");
 
         var department3 = new Department();
-        department3.setName("Information Coordination Organisation");
+        department3.setName("Information Coordination Organization");
         department3.setAcronym("ICO");
 
         departmentBase.add(department1);
