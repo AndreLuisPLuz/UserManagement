@@ -13,6 +13,7 @@ public class Department extends BaseModel {
     @Column(name = "name")
     private String name;
 
+    // Sigla do departamento
     @Column(name = "acronym")
     private String acronym;
 
