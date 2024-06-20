@@ -47,8 +47,8 @@ public class MockUserService implements UserService{
         List<DepartmentDTO> allDepartments;
 
         switch (getAllDepartmentsResult) {
-            case DataResult.Ok<DepartmentDTO> r -> { allDepartments = r.data(); }
-            case DataResult.Error<DepartmentDTO> error -> { throw new Exception("Failed to fetch departments."); }
+            case DataResult.Ok<DepartmentDTO> r -> allDepartments = r.data(); 
+            case DataResult.Error<DepartmentDTO> error -> throw new Exception("Failed to fetch departments.");
         };
 
         DepartmentDTO bdo = allDepartments.get(1);
@@ -61,7 +61,14 @@ public class MockUserService implements UserService{
         var user1 = new User();
         user1.setName("Yasmin Trembulack");
         user1.setEmail("yasmin@gmail.com");
-        user1.setHashedPassword("senha");
+        
+        String hashedPassword ="senha";
+
+        // // -------- Tirar o comentario quando o PasswordService estiver implementado --------
+
+        // hashedPassword = passwordService.applyCryptography(hashedPassword);
+
+        user1.setHashedPassword(hashedPassword);
         user1.setEmployeeType(employeeTypesBase.get(0));
         user1.setDepartment(departament);
 
@@ -72,6 +79,15 @@ public class MockUserService implements UserService{
     @Override
     public ArrayMessageResult Create(User user) {
         List<String> messages = new ArrayList<>();
+
+        // // -------- Tirar o comentario quando o PasswordService estiver implementado --------
+
+        // if (passwordService.verifyRules(user.getHashedPassword()) != 5){
+        //     messages.add("Weak password.");
+        //     messages.add(String.format("%d", passwordService.verifyRules(user.getHashedPassword())));
+        //     return new ArrayMessageResult.Error(400, messages);
+        // }
+
         userBase.add(user);
         messages.add("User created with sucess.");
         return new ArrayMessageResult.Ok(messages);
@@ -94,8 +110,23 @@ public class MockUserService implements UserService{
             return new ArrayMessageResult.Error(404, messages);
         }
 
-        String hashedPassword = passwordService.applyCryptography(newPassword);
-        user.setHashedPassword(hashedPassword);
+
+        // // -------- Tirar o comentario quando o PasswordService estiver implementado --------
+
+        // if (!passwordService.verifyCryptography(newPassword, user.getHashedPassword())){
+        //     messages.add("Incorrect password.");
+        //     return new ArrayMessageResult.Error(400, messages);
+        // }
+    
+        // if (passwordService.verifyRules(newPassword) != 5){
+        //     messages.add("Weak password.");
+        //     messages.add(String.format("%d", passwordService.verifyRules(newPassword)));
+        //     return new ArrayMessageResult.Error(400, messages);
+        // }
+
+        // newPassword = passwordService.applyCryptography(newPassword);
+
+        user.setHashedPassword(newPassword);
 
         messages.add("Password successfully changed.");
         return new ArrayMessageResult.Ok(messages);
