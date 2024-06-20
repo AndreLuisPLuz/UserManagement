@@ -15,6 +15,31 @@ structure/DataResult:           "message": String, "data": T[]
     Todos os return de erro não iguais.
     Error: Caso algo de errado vc retorna passan o errorcode (401, 403) e a mensagem do erro.
 
+    Exemplo de uso:
+
+        DataResult<Department> GetAll();
+            // Nesse caso, o método Get retorna um DataResult. Todas essas interfaces de "result" retornam ou um .Ok<>, ou um .Error<>.
+            // Se o retorno for um .Ok<>, podemos acessar uma List<Departament> dentro dele.
+        
+        Podemos verificar o resultado com o uso de um switch:
+
+            boolean wasFetchSuccessful;
+            List<Department> fetchedDepartments;
+
+            switch (result) {
+                case DataResult.Ok<Department> r -> {
+                    wasFetchSuccessful = true;
+                    fetchedDepartments = r.data();
+                }
+                
+                case DataResult.Error<Department> error -> {
+                    wasFetchSuccessful = false;
+                    fetchedDepartments = null;
+                }
+            };
+
+        Nesse código, quando o resultado da operação for um Ok, pegamos os dados normalmente o uso do r.data().
+        Também podemos pegar mensagens de erro e status code quanto for um erro, usando error.errorCode() e error.message().
 
 model/BaseModel:
     essa model vai ser utilizada como base para todas as models, ela cria as colunas
