@@ -40,7 +40,7 @@ public class ServiceServiceTests {
 
         assertNotNull(services);
         assertTrue(wasGetSuccessfully);
-
+        assertTrue(services.size() <= 5);
 
         result = service.Get("", null, null);
 
