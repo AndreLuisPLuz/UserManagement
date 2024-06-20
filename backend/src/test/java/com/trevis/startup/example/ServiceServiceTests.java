@@ -40,6 +40,25 @@ public class ServiceServiceTests {
 
         assertNotNull(services);
         assertTrue(wasGetSuccessfully);
+        assertTrue(services.size() <= 5);
+
+        result = service.Get("1", 2, 5);
+
+        switch (result) {
+            case DataResult.Ok<Service> r -> {
+                wasGetSuccessfully = true;
+                services = r.data();
+            }
+            case DataResult.Error<Service> error -> {
+                wasGetSuccessfully = false;
+                services = null;
+            }
+        };
+
+        assertNotNull(services);
+        assertTrue(wasGetSuccessfully);
+        assertTrue(services.size() <= 5);
+
 
 
         result = service.Get("", null, null);
