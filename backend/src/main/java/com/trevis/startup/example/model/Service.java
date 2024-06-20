@@ -9,21 +9,21 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "services")
 public class Service extends BaseModel {
-    @Column(name = "name")
+    @Column(name = "name", columnDefinition = "VARCHAR(255)")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "VARCHAR(255)")
     private String description;
 
-    @Column(name = "is_internal")
+    @Column(name = "is_internal", columnDefinition = "BIT")
     private Boolean isInternal;
 
     @ManyToOne
-    @JoinColumn(name = "manager_id", nullable = false)
+    @JoinColumn(name = "manager_id", nullable = false, columnDefinition = "INTEGER")
     private User manager;
 
     @ManyToOne
-    @JoinColumn(name = "department_id", nullable = false)
+    @JoinColumn(name = "department_id", nullable = false, columnDefinition = "INTEGER")
     private Department department;
 
     public String getName() {

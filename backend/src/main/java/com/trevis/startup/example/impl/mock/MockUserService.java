@@ -8,22 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.model.EmployeeType;
 import com.trevis.startup.example.model.User;
-import com.trevis.startup.example.services.PasswordService;
+import com.trevis.startup.example.services.DepartmentService;
+// import com.trevis.startup.example.services.PasswordService;
 import com.trevis.startup.example.services.UserService;
 import com.trevis.startup.example.structure.ArrayMessageResult;
 import com.trevis.startup.example.structure.DataResult;
+
+import jakarta.annotation.PostConstruct;
 
 public class MockUserService implements UserService{
     List<User> userBase;
     List<EmployeeType> employeeTypesBase;
 
     @Autowired
-    MockDepartmentService mockDepartmentService;
+    DepartmentService mockDepartmentService;
 
-    @Autowired
-    PasswordService passwordService;
+    // @Autowired
+    // PasswordService passwordService;
 
-    public MockUserService() throws Exception {
+    @PostConstruct
+    public void init() throws Exception
+    {
         userBase = new ArrayList<>();
         employeeTypesBase = new ArrayList<>();
 

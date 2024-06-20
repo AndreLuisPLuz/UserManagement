@@ -12,21 +12,21 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 public class User extends BaseModel {
-    @Column(name = "name")
+    @Column(name = "name", columnDefinition = "VARCHAR(255)")
     private String name;
 
-    @Column(name = "email")
+    @Column(name = "email", columnDefinition = "VARCHAR(255)")
     private String email;
 
-    @Column(name = "hashed_password")
+    @Column(name = "hashed_password", columnDefinition = "VARCHAR(1000)")
     private String hashedPassword;
 
     @ManyToOne
-    @JoinColumn(name = "department_id", nullable = false)
+    @JoinColumn(name = "department_id", nullable = false, columnDefinition = "INTEGER")
     private Department department;
 
     @ManyToOne
-    @JoinColumn(name = "employee_type_id", nullable = false)
+    @JoinColumn(name = "employee_type_id", nullable = false, columnDefinition = "INTEGER")
     private EmployeeType employeeType;
 
     @OneToMany(mappedBy = "manager")

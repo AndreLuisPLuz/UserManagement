@@ -14,7 +14,7 @@ import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.services.DepartmentService;
 import com.trevis.startup.example.structure.DataResult;
 
-@SpringBootTest
+@SpringBootTest(classes = {com.trevis.startup.example.Application.class})
 public class DepartmentTests {
     @Autowired
     DepartmentService service;

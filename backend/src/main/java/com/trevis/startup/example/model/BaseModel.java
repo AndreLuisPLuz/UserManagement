@@ -13,14 +13,14 @@ import jakarta.persistence.TemporalType;
 public class BaseModel {
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", columnDefinition = "INTEGER")
     protected Long id;
 
-    @Column(name = "createdAt")
+    @Column(name = "createdAt", columnDefinition = "DATETIME")
     @Temporal(TemporalType.DATE)
     private Date createdAt;
 
-    @Column(name = "updatedAt")
+    @Column(name = "updatedAt", columnDefinition = "DATETIME")
     @Temporal(TemporalType.DATE)
     private Date updatedAt;
 
