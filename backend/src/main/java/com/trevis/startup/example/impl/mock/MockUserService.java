@@ -28,12 +28,15 @@ public class MockUserService implements UserService{
         employeeTypesBase = new ArrayList<>();
 
         var administrador = new EmployeeType();
+        administrador.setId(1l);
         administrador.setName("Administrador");
 
         var gerente = new EmployeeType();
+        gerente.setId(2l);
         gerente.setName("Gerente");
 
         var colaborador = new EmployeeType();
+        colaborador.setId(3l);
         colaborador.setName("Colaborador");
 
         employeeTypesBase.add(administrador);
@@ -44,26 +47,16 @@ public class MockUserService implements UserService{
         List<Department> allDepartments;
 
         switch (getAllDepartmentsResult) {
-<<<<<<< HEAD
             case DataResult.Ok<Department> r -> { allDepartments = r.data(); }
             case DataResult.Error<Department> error -> { throw new Exception("Failed to fetch departments."); }
-=======
-            case DataResult.Ok<DepartmentDTO> r -> allDepartments = r.data(); 
-            case DataResult.Error<DepartmentDTO> error -> throw new Exception("Failed to fetch departments.");
->>>>>>> 61c4e8123d8e09f6f1d0bfd15ed0e0229be49d3f
         };
 
         Department bdo = allDepartments.get(1);
 
-        var departament = new Department();
-        departament.setId(bdo.getId());
-        departament.setName(bdo.getName());
-        departament.setAcronym(bdo.getAcronym());
-
         var user1 = new User();
+        user1.setId(1l);
         user1.setName("Yasmin Trembulack");
         user1.setEmail("yasmin@gmail.com");
-        
         String hashedPassword ="senha";
 
         // // -------- Tirar o comentario quando o PasswordService estiver implementado --------
@@ -72,7 +65,7 @@ public class MockUserService implements UserService{
 
         user1.setHashedPassword(hashedPassword);
         user1.setEmployeeType(employeeTypesBase.get(0));
-        user1.setDepartment(departament);
+        user1.setDepartment(bdo);
 
         userBase.add(user1);
         
