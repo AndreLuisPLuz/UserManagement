@@ -44,13 +44,8 @@ public class MockUserService implements UserService{
         List<Department> allDepartments;
 
         switch (getAllDepartmentsResult) {
-<<<<<<< HEAD
             case DataResult.Ok<Department> r -> { allDepartments = r.data(); }
             case DataResult.Error<Department> error -> { throw new Exception("Failed to fetch departments."); }
-=======
-            case DataResult.Ok<DepartmentDTO> r -> allDepartments = r.data(); 
-            case DataResult.Error<DepartmentDTO> error -> throw new Exception("Failed to fetch departments.");
->>>>>>> 61c4e8123d8e09f6f1d0bfd15ed0e0229be49d3f
         };
 
         Department bdo = allDepartments.get(1);
