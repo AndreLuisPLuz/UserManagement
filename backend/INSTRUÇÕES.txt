@@ -52,3 +52,11 @@ model/BaseModel:
 Todos os services retonaram dados com os tipos base(User, Service, Departament),
 recomendamos que antes de passar para o frontend seja realizado a conversção desses dados para
 o seu tipo DTO no controller, exemplo: User --> UserDTO, Departament --> DepartamentDTO etc.
+
+Exemplo de conversão simples:
+    UserDTO dto = UserDTO.buildFromEntity(user);
+
+Exemplo de conversão em lista:
+    List<User> dtos = allUsers.stream()
+        .map(u -> UserDTO.buildFromEntity(u))
+        .collect(Collectors.toList());
