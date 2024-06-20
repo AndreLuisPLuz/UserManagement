@@ -44,42 +44,52 @@ public class MockServiceService implements ServiceService{
         
 
         // Set Services
-        var service1 = new Service();
-        service1.setId(1l);
-        service1.setName("Service 01");
-        service1.setDescription("Service 01 description");
-        service1.setIsInternal(true);
-        service1.setManager(user);
-        service1.setDepartment(allDepartments.get(1));
+        var service = new Service();
+        Integer departmentIndex = 0;
 
-        var service2 = new Service();
-        service2.setId(1l);
-        service2.setName("Service 02");
-        service2.setDescription("Service 02 description");
-        service2.setIsInternal(true);
-        service2.setManager(user);
-        service2.setDepartment(allDepartments.get(0));
+        for(Long i = 0l ; i < 20l; i++){
+            if(departmentIndex == 2)
+                departmentIndex = 0;
 
-        var service3 = new Service();
-        service3.setId(1l);
-        service3.setName("Service 03");
-        service3.setDescription("Service 03 description");
-        service3.setIsInternal(false);
-        service3.setManager(user);
-        service3.setDepartment(allDepartments.get(1));
+            String name = "Service "+i;
+            String description = "Service "+i+" description.";
+            service.setId(i);
+            service.setName(name);
+            service.setDescription(description);
 
-        servicesBase.add(service1);
-        servicesBase.add(service2);
-        servicesBase.add(service3);
+            if(i % 2 == 0)
+                service.setIsInternal(true);
+            else
+                service.setIsInternal(false);
+
+            service.setManager(user);
+            
+            service.setDepartment(allDepartments.get(departmentIndex));
+
+            departmentIndex++;
+            
+            servicesBase.add(service);
+        }
     }
 
     @Override
     public DataResult<Service> Get(String query, Integer pageIndex, Integer pageSize) {
+        if (pageIndex <= 0 || pageIndex == null)
+            return new DataResult.Error<>(400, "pagination arguments cannot be equal to or less than zero.");
+
+        if (pageSize == null || pageIndex == null) 
+            return new DataResult.Error<>(400, "Pagination arguments required as query arguments.");
+        
+        
         List<Service> matchingServices = new ArrayList<>();
 
-        for (Service s : servicesBase) {
-            if (s.getName().contains(query)){
-                matchingServices.add(s);
+        Integer startIndex = (pageIndex - 1) * pageSize;
+        Integer endIndex = pageIndex * pageSize;
+        
+        
+        for (int i = startIndex; i <= endIndex; i++) {
+            if (servicesBase.get(i).getName().contains(query)){
+                matchingServices.add(servicesBase.get(i));
             }
         }
         if (matchingServices.size() == 0)

@@ -24,3 +24,6 @@ model/BaseModel:
         public class User extends BaseModel {...}
 
 
+Todos os services retonaram dados com os tipos base(User, Service, Departament),
+recomendamos que antes de passar para o frontend seja realizado a conversção desses dados para
+o seu tipo DTO no controller, exemplo: User --> UserDTO, Departament --> DepartamentDTO etc.
