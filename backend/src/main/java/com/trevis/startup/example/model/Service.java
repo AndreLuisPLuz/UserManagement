@@ -16,7 +16,7 @@ public class Service extends BaseModel {
     private String description;
 
     @Column(name = "is_internal")
-    private String isInternal;
+    private Boolean isInternal;
 
     @ManyToOne
     @JoinColumn(name = "manager_id", nullable = false)
@@ -42,11 +42,11 @@ public class Service extends BaseModel {
         this.description = description;
     }
 
-    public String getIsInternal() {
+    public Boolean getIsInternal() {
         return isInternal;
     }
 
-    public void setIsInternal(String isInternal) {
+    public void setIsInternal(Boolean isInternal) {
         this.isInternal = isInternal;
     }
 
