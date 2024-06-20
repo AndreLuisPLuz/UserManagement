@@ -3,8 +3,12 @@ package com.trevis.startup.example.model;
 import java.util.Set;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "employee_type")
 public class EmployeeType extends BaseModel {
     @Column(name = "name")
     private String name;

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trevis.startup.example.dto.DepartmentDTO;
+import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.services.DepartmentService;
 import com.trevis.startup.example.structure.DataResult;
 
@@ -20,19 +20,19 @@ public class DepartmentTests {
     DepartmentService service;
 
     @Test
-    void getAllDepartmentsTest() {
+    private void getAllDepartmentsTest() {
         var result = service.GetAll();
 
         boolean wasFetchSuccessful;
-        List<DepartmentDTO> fetchedDepartments;
+        List<Department> fetchedDepartments;
 
         switch (result) {
-            case DataResult.Ok<DepartmentDTO> r -> {
+            case DataResult.Ok<Department> r -> {
                 wasFetchSuccessful = true;
                 fetchedDepartments = r.data();
             }
             
-            case DataResult.Error<DepartmentDTO> error -> {
+            case DataResult.Error<Department> error -> {
                 wasFetchSuccessful = false;
                 fetchedDepartments = null;
             }

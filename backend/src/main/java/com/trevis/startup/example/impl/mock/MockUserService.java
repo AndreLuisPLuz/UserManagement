@@ -2,12 +2,9 @@ package com.trevis.startup.example.impl.mock;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.trevis.startup.example.dto.DepartmentDTO;
-import com.trevis.startup.example.dto.UserDTO;
 import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.model.EmployeeType;
 import com.trevis.startup.example.model.User;
@@ -43,20 +40,20 @@ public class MockUserService implements UserService{
         employeeTypesBase.add(gerente);
         employeeTypesBase.add(colaborador);
 
-        DataResult<DepartmentDTO> getAllDepartmentsResult = mockDepartmentService.GetAll();
-        List<DepartmentDTO> allDepartments;
+        DataResult<Department> getAllDepartmentsResult = mockDepartmentService.GetAll();
+        List<Department> allDepartments;
 
         switch (getAllDepartmentsResult) {
-            case DataResult.Ok<DepartmentDTO> r -> { allDepartments = r.data(); }
-            case DataResult.Error<DepartmentDTO> error -> { throw new Exception("Failed to fetch departments."); }
+            case DataResult.Ok<Department> r -> { allDepartments = r.data(); }
+            case DataResult.Error<Department> error -> { throw new Exception("Failed to fetch departments."); }
         };
 
-        DepartmentDTO bdo = allDepartments.get(1);
+        Department bdo = allDepartments.get(1);
 
         var departament = new Department();
-        departament.setId(bdo.id());
-        departament.setName(bdo.name());
-        departament.setAcronym(bdo.acronym());
+        departament.setId(bdo.getId());
+        departament.setName(bdo.getName());
+        departament.setAcronym(bdo.getAcronym());
 
         var user1 = new User();
         user1.setName("Yasmin Trembulack");
@@ -102,7 +99,7 @@ public class MockUserService implements UserService{
     }
 
     @Override
-    public DataResult<UserDTO> Get(String username) {
+    public DataResult<User> Get(String username) {
         List<User> matchingUsers = new ArrayList<>();
 
         for (User u : userBase) {
@@ -114,12 +111,6 @@ public class MockUserService implements UserService{
         if (matchingUsers.size() == 0)
             return new DataResult.Error<>(404, "No matching users found.");
 
-        return new DataResult.Ok<>(
-            "Matching users found.",
-            matchingUsers.stream()
-                .map(u -> UserDTO.buildFromEntity(u))
-                .collect(Collectors.toList())
-        );
+        return new DataResult.Ok<>("Matching users found.", matchingUsers);
     }
-    
 }
