@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "employee_type")
 public class EmployeeType extends BaseModel {
-    @Column(name = "name")
+    @Column(name = "name", columnDefinition = "VARCHAR(255)")
     private String name;
 
     @OneToMany(mappedBy = "employeeType")

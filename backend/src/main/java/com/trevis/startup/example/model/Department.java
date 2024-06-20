@@ -10,11 +10,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "departments")
 public class Department extends BaseModel {
-    @Column(name = "name")
+    @Column(name = "name", columnDefinition = "VARCHAR(255)")
     private String name;
 
     // Sigla do departamento
-    @Column(name = "acronym")
+    @Column(name = "acronym", columnDefinition = "VARCHAR(5)")
     private String acronym;
 
     @OneToMany(mappedBy = "department")

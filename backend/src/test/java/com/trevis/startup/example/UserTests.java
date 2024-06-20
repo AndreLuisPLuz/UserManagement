@@ -14,12 +14,12 @@ import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.model.EmployeeType;
 import com.trevis.startup.example.model.User;
 import com.trevis.startup.example.services.DepartmentService;
-import com.trevis.startup.example.services.PasswordService;
+// import com.trevis.startup.example.services.PasswordService;
 import com.trevis.startup.example.services.UserService;
 import com.trevis.startup.example.structure.ArrayMessageResult;
 import com.trevis.startup.example.structure.DataResult;
 
-@SpringBootTest
+@SpringBootTest(classes = {com.trevis.startup.example.Application.class})
 public class UserTests {
     @Autowired
     UserService service;
@@ -83,7 +83,7 @@ public class UserTests {
 
     @Test
     public void userPasswordChangeTest() {
-        var userSearch = service.Get("John Doe");
+        var userSearch = service.Get("Yasmin");
         List<User> matchingUsers = switch(userSearch) {
             case DataResult.Ok<User> r -> r.data();
             case DataResult.Error<User> error -> null;
@@ -91,15 +91,15 @@ public class UserTests {
 
         assertNotNull(matchingUsers);
 
-        var johnDoe = matchingUsers.get(0);
-        assertNotNull(johnDoe);
+        var yasmin = matchingUsers.get(0);
+        assertNotNull(yasmin);
 
-        service.UpdatePassword(johnDoe, "newjohndoepassword");
+        service.UpdatePassword(yasmin, "newpassword");
 
         // assertTrue(
         //     passwordService.verifyCryptography(
-        //         "newjohndoepassword",
-        //         johnDoe.getHashedPassword()
+        //         "newpassword",
+        //         yasmin.getHashedPassword()
         //         )
         // );
     }
