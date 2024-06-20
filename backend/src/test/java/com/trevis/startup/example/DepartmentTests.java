@@ -20,7 +20,7 @@ public class DepartmentTests {
     DepartmentService service;
 
     @Test
-    private void getAllDepartmentsTest() {
+    public void getAllDepartmentsTest() {
         var result = service.GetAll();
 
         boolean wasFetchSuccessful;
