@@ -83,19 +83,25 @@ public class MockServiceService implements ServiceService{
         
         List<Service> matchingServices = new ArrayList<>();
 
-        Integer startIndex = (pageIndex - 1) * pageSize;
-        Integer endIndex = pageIndex * pageSize;
-        
-        
-        for (int i = startIndex; i <= endIndex; i++) {
-            if (servicesBase.get(i).getName().contains(query)){
-                matchingServices.add(servicesBase.get(i));
+        for (var service : servicesBase) {
+            if (service.getName().contains(query)) {
+                matchingServices.add(service);
             }
         }
-        if (matchingServices.size() == 0)
+
+        Integer startIndex = (pageIndex - 1) * pageSize;
+        Integer endIndex = pageIndex * pageSize;
+
+        List<Service> servicesToReturn = new ArrayList<>();
+
+        for (int i = startIndex; i <= endIndex; i++) {
+            servicesToReturn.add(servicesBase.get(i));
+        }
+
+        if (servicesToReturn.size() == 0)
             return new DataResult.Error<>(404, "No matching services found.");
 
-        return new DataResult.Ok<>("Matching services found.", matchingServices);
+        return new DataResult.Ok<>("Matching services found.", servicesToReturn);
 
     }
 

@@ -56,23 +56,41 @@ public class MockUserService implements UserService{
             case DataResult.Error<Department> error -> { throw new Exception("Failed to fetch departments."); }
         };
 
-        Department bdo = allDepartments.get(1);
 
         var user1 = new User();
         user1.setId(1l);
         user1.setName("Yasmin Trembulack");
         user1.setEmail("yasmin@gmail.com");
-        String hashedPassword ="senha";
 
+        String hashedPassword ="senha@123";
+        
         // // -------- Tirar o comentario quando o PasswordService estiver implementado --------
-
+        
         // hashedPassword = passwordService.applyCryptography(hashedPassword);
-
+        
         user1.setHashedPassword(hashedPassword);
         user1.setEmployeeType(employeeTypesBase.get(0));
-        user1.setDepartment(bdo);
+        user1.setDepartment(allDepartments.get(1));
 
         userBase.add(user1);
+
+
+        var user2 = new User();
+        user2.setId(2l);
+        user2.setName("Andre Pereira");
+        user2.setEmail("andre@gmail.com");
+
+        hashedPassword ="senha@123";
+
+        // // -------- Tirar o comentario quando o PasswordService estiver implementado --------
+        
+        // hashedPassword = passwordService.applyCryptography(hashedPassword);
+
+        user2.setHashedPassword(hashedPassword);
+        user2.setEmployeeType(employeeTypesBase.get(1));
+        user2.setDepartment(allDepartments.get(2));
+
+        userBase.add(user2);
         
     }
 
