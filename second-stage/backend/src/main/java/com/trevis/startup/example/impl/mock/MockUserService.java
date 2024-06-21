@@ -1,4 +1,4 @@
-package com.trevis.startup.example.impl;
+package com.trevis.startup.example.impl.mock;
 
 import java.util.ArrayList;
 import java.util.List;
