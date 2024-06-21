@@ -2,6 +2,7 @@ package com.trevis.startup.example.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trevis.startup.example.dto.payload.PasswordChangePayload;
 import com.trevis.startup.example.dto.payload.UserPayload;
 import com.trevis.startup.example.dto.response.MessagesResponse;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
@@ -15,9 +16,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
 public class UserController {
@@ -58,4 +60,26 @@ public class UserController {
         return ResponseEntity.ok().body(new MessagesResponse(messages));
     }
     
+    @PatchMapping("/api/user")
+    public ResponseEntity<MessagesResponse> updateUserPassword(
+            @PathVariable Long id,
+            @RequestBody PasswordChangePayload payload
+    ) {
+        Boolean changedSuccesfully;
+        try {
+            changedSuccesfully = userService.updatePassword(id, payload.password());
+        } catch (NoSuchEntityException ex) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<String> messages = new ArrayList<>();
+
+        if (!changedSuccesfully) {
+            messages.add("Password does not meet requirements.");
+            return ResponseEntity.badRequest().body(new MessagesResponse(messages));
+        }
+
+        messages.add("Password changed with success.");
+        return ResponseEntity.ok().body(new MessagesResponse(messages));
+    }
 }
