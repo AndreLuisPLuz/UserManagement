@@ -3,6 +3,7 @@ package com.trevis.startup.example.impl.mock;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.services.DepartmentService;
 
@@ -34,5 +35,11 @@ public class MockDepartmentService implements DepartmentService {
     @Override
     public List<Department> getAll(){
         return departments;
+    }
+
+    @Override
+    public Department getById(Long id) throws NoSuchEntityException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getById'");
     }
 }
