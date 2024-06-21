@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.trevis.startup.example.exceptions.BadHashConfigurationException;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.model.User;
@@ -27,7 +28,7 @@ public class DefaultUserService implements UserService {
         return repo.save(newUser);
     }
 
-    public Boolean updatePassword(Long id, String newPassword) throws NoSuchEntityException {
+    public Boolean updatePassword(Long id, String newPassword) throws NoSuchEntityException, BadHashConfigurationException {
         var userFetch = repo.findById(id);
         if (!userFetch.isPresent())
             throw new NoSuchEntityException("User not found.");

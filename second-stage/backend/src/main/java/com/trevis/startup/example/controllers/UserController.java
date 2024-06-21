@@ -2,8 +2,10 @@ package com.trevis.startup.example.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trevis.startup.example.dto.payload.PasswordChangePayload;
 import com.trevis.startup.example.dto.payload.UserPayload;
 import com.trevis.startup.example.dto.response.MessagesResponse;
+import com.trevis.startup.example.exceptions.BadHashConfigurationException;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.services.DepartmentService;
@@ -15,9 +17,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
 public class UserController {
@@ -58,4 +61,29 @@ public class UserController {
         return ResponseEntity.ok().body(new MessagesResponse(messages));
     }
     
+    @PatchMapping("/api/user")
+    public ResponseEntity<MessagesResponse> updateUserPassword(
+            @PathVariable Long id,
+            @RequestBody PasswordChangePayload payload
+    ) {
+        Boolean changedSuccesfully;
+        List<String> messages = new ArrayList<>();
+
+        try {
+            changedSuccesfully = userService.updatePassword(id, payload.password());
+        } catch (NoSuchEntityException ex) {
+            return ResponseEntity.notFound().build();
+        } catch (BadHashConfigurationException ex) {
+            messages.add("Bad hash configuration on the serve-side.");
+            return ResponseEntity.internalServerError().body(new MessagesResponse(messages));
+        }
+
+        if (!changedSuccesfully) {
+            messages.add("Password does not meet requirements.");
+            return ResponseEntity.badRequest().body(new MessagesResponse(messages));
+        }
+
+        messages.add("Password changed with success.");
+        return ResponseEntity.ok().body(new MessagesResponse(messages));
+    }
 }
