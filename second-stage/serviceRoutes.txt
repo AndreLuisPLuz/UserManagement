@@ -4,9 +4,7 @@ response:
     "message": value,
     "data": [ { "id" : id, "name" : value, "description" : value, "intern" : true|false, "departament", value, "manager" :
     value }, ... ]
-}
-
-
+} OKKKKKKKKKKKK
 
 
 POST /service
@@ -19,7 +17,7 @@ POST /service
 response:
 {
     "message": value,    
-}
+} OKKKKKKKKK
 
 
 

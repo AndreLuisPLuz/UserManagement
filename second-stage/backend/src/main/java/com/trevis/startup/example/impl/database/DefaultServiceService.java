@@ -2,11 +2,14 @@ package com.trevis.startup.example.impl.database;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.exceptions.NoSuchServiceException;
 import com.trevis.startup.example.model.Service;
+import com.trevis.startup.example.model.User;
 import com.trevis.startup.example.repositories.ServiceJPARepository;
 import com.trevis.startup.example.services.ServiceService;
 
@@ -43,5 +46,30 @@ public class DefaultServiceService implements ServiceService{
        
         
     }
+
+    @Override
+    public Service create(String name, String description, Boolean internal, User menager) {
+        var newService = new Service();
+        newService.setName(name);
+        newService.setDescription(description);
+        newService.setInternal(internal);
+        newService.setManager(menager);
+        return repo.save(newService);
+    }
+
+    @Override
+    public Optional<Service> findById(Long id) throws NoSuchEntityException {
+        var serviceFetch = repo.findById(id);
+        if (!serviceFetch.isPresent())
+            throw new NoSuchEntityException("Service not found.");
+        return serviceFetch;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        deleteById(id);
+    }
+
+    
     
 }

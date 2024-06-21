@@ -15,6 +15,9 @@ public class Service {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "is_internal")
+    private Boolean internal;
+
     @ManyToOne
     @JoinColumn(name = "manager_id", nullable = false)
     private User manager;
@@ -49,5 +52,21 @@ public class Service {
 
     public void setUser(User user) {
         this.manager = user;
+    }
+
+    public Boolean getInternal() {
+        return internal;
+    }
+
+    public void setInternal(Boolean internal) {
+        this.internal = internal;
+    }
+
+    public User getManager() {
+        return manager;
+    }
+
+    public void setManager(User manager) {
+        this.manager = manager;
     }
 }

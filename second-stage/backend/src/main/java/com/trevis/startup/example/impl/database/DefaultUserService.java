@@ -1,5 +1,7 @@
 package com.trevis.startup.example.impl.database;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
@@ -48,4 +50,13 @@ public class DefaultUserService implements UserService {
         
         return matchingUsers.get(0);
     }
+
+    @Override
+    public Optional<User> findById(Long id) throws NoSuchEntityException{
+        var userFetch = repo.findById(id);
+        if (!userFetch.isPresent())
+            throw new NoSuchEntityException("User not found.");
+        return userFetch;
+    }
+
 }
