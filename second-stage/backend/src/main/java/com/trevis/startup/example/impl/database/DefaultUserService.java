@@ -2,7 +2,7 @@ package com.trevis.startup.example.impl.database;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.trevis.startup.example.exceptions.NoSuchUserException;
+import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.model.User;
 import com.trevis.startup.example.model.UserType;
@@ -25,10 +25,10 @@ public class DefaultUserService implements UserService {
         return repo.save(newUser);
     }
 
-    public Boolean updatePassword(Long id, String newPassword) throws NoSuchUserException {
+    public Boolean updatePassword(Long id, String newPassword) throws NoSuchEntityException {
         var userFetch = repo.findById(id);
         if (!userFetch.isPresent())
-            throw new NoSuchUserException("User not found.");
+            throw new NoSuchEntityException("User not found.");
 
         int passwordStrength = passwordService.verifyRules(newPassword);
         if (passwordStrength < 5)
@@ -40,11 +40,11 @@ public class DefaultUserService implements UserService {
         return true;
     }
 
-    public User get(String username) throws NoSuchUserException {
+    public User get(String username) throws NoSuchEntityException {
         var matchingUsers = repo.findByUsernameContaining(username);
 
         if (matchingUsers.size() == 0)
-            throw new NoSuchUserException("Matching user not found.");
+            throw new NoSuchEntityException("Matching user not found.");
         
         return matchingUsers.get(0);
     }
