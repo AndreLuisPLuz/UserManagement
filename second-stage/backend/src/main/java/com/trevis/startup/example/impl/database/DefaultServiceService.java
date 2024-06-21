@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.trevis.startup.example.exceptions.NoSuchServiceException;
 import com.trevis.startup.example.model.Service;
 import com.trevis.startup.example.repositories.ServiceJPARepository;
-import com.trevis.startup.example.repositories.UserJPARepository;
 import com.trevis.startup.example.services.ServiceService;
 
 public class DefaultServiceService implements ServiceService{
@@ -15,17 +15,15 @@ public class DefaultServiceService implements ServiceService{
     @Autowired
     ServiceJPARepository repo;
 
-
     @Override
-    public List<Service> get(String query, Integer pageIndex, Integer pageSize) {
+    public List<Service> get(String query, Integer pageIndex, Integer pageSize) throws NoSuchServiceException{
 
         if (pageIndex == null || pageSize == null) 
-            return null; // "Pagination arguments cannot be equal to or less than zero."
+            throw new NoSuchServiceException("Pagination arguments cannot be equal to or less than zero.");
         
         if (pageIndex < 1 || pageSize < 1) 
-            return null; // "Pagination arguments required as query arguments."
+            throw new NoSuchServiceException("Pagination arguments required as query arguments.");
 
-            
         pageIndex *= pageSize;
 
         List<Service> services = repo.findByNameContaining(query);

@@ -22,7 +22,6 @@ public class DefaultUserService implements UserService {
         newUser.setUsername(username);
         newUser.setDepartment(department);
         newUser.setUsertype(type);
-
         return repo.save(newUser);
     }
 
