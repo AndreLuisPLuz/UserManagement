@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trevis.startup.example.dto.payload.PasswordChangePayload;
 import com.trevis.startup.example.dto.payload.UserPayload;
 import com.trevis.startup.example.dto.response.MessagesResponse;
+import com.trevis.startup.example.exceptions.BadHashConfigurationException;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.services.DepartmentService;
@@ -66,13 +67,16 @@ public class UserController {
             @RequestBody PasswordChangePayload payload
     ) {
         Boolean changedSuccesfully;
+        List<String> messages = new ArrayList<>();
+
         try {
             changedSuccesfully = userService.updatePassword(id, payload.password());
         } catch (NoSuchEntityException ex) {
             return ResponseEntity.notFound().build();
+        } catch (BadHashConfigurationException ex) {
+            messages.add("Bad hash configuration on the serve-side.");
+            return ResponseEntity.internalServerError().body(new MessagesResponse(messages));
         }
-
-        List<String> messages = new ArrayList<>();
 
         if (!changedSuccesfully) {
             messages.add("Password does not meet requirements.");
