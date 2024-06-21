@@ -26,13 +26,14 @@ public class MockUserService implements UserService{
     }
 
     @Override
-    public Void updatePassword(Long id, String newPassword){
+    public Boolean updatePassword(Long id, String newPassword){
         for (User user : users) {
             if (user.getId() == id) {
                 user.setPassword(newPassword);
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     @Override

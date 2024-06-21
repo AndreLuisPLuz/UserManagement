@@ -1,5 +1,6 @@
 package com.trevis.startup.example;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -40,7 +41,8 @@ class UserServiceTests {
         UserType usertype = new UserType();
         usertype.setType("Manager");
         User createUser = service.create("Queila", department, usertype);
-        service.updatePassword(createUser.getId(), "12345678");
+
+        assertDoesNotThrow(() -> service.updatePassword(createUser.getId(), "12345678"));
 
         assertEquals(createUser.getPassword(), "12345678");
     }
@@ -53,8 +55,8 @@ class UserServiceTests {
         usertype.setType("Manager");
         User createUser = service.create("Joao", department, usertype);
 
-        assertEquals(service.get("Joao"), createUser);
+        User userInDatabase = assertDoesNotThrow(() -> service.get("Joao"));
 
+        assertEquals(userInDatabase, createUser);
     }
-
 }
