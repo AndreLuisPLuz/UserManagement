@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import com.trevis.startup.example.impl.database.DefaultDepartmentService;
+import com.trevis.startup.example.impl.database.DefaultServiceService;
+import com.trevis.startup.example.impl.database.DefaultUserService;
 import com.trevis.startup.example.impl.mock.MockDepartmentService;
 import com.trevis.startup.example.impl.mock.MockServiceService;
 import com.trevis.startup.example.impl.mock.MockUserService;
@@ -20,19 +23,19 @@ public class DependenciesConfiguration {
     @Bean
     @Scope
     public DepartmentService departmentService() {
-        return new MockDepartmentService();
+        return new DefaultDepartmentService();
     }
 
     @Bean
     @Scope
     public UserService userService() {
-        return new MockUserService();
+        return new DefaultUserService();
     }
 
     @Bean
     @Scope
     public ServiceService serviceService() {
-        return new MockServiceService();
+        return new DefaultServiceService();
     }
 
     @Bean
@@ -46,5 +49,7 @@ public class DependenciesConfiguration {
     public PasswordService passwordService() {
         return null;
     }
+
+
 
 }

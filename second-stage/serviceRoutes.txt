@@ -1,0 +1,54 @@
+GET /service?query=value&page=page&size=size
+response:
+{
+    "message": value,
+    "data": [ { "id" : id, "name" : value, "description" : value, "intern" : true|false, "departament", value, "manager" :
+    value }, ... ]
+} OKKKKKKKKKKKK
+
+
+POST /service
+{
+    "name" : value,
+    "description" : value,
+    "intern" : true|false,
+    "managerId" : id
+}
+response:
+{
+    "message": value,    
+} OKKKKKKKKK
+
+
+
+
+PUT /service/{id}
+{
+    "name" : value,
+    "description" : value,
+    "intern" : true|false
+}
+response:
+{
+    "message": value,
+}
+
+
+
+DELETE /service/{id}
+response:
+{
+    "message": value,
+}
+
+
+POST /service
+{
+    "name" : value,
+    "description" : value,
+    "intern" : true|false
+}
+response:
+{
+    "message": value,
+}

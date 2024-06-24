@@ -2,12 +2,15 @@ package com.trevis.startup.example.impl.database;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.trevis.startup.example.exceptions.NoSuchEntityException;
+import com.trevis.startup.example.exceptions.NoSuchServiceException;
 import com.trevis.startup.example.model.Service;
+import com.trevis.startup.example.model.User;
 import com.trevis.startup.example.repositories.ServiceJPARepository;
-import com.trevis.startup.example.repositories.UserJPARepository;
 import com.trevis.startup.example.services.ServiceService;
 
 public class DefaultServiceService implements ServiceService{
@@ -15,17 +18,15 @@ public class DefaultServiceService implements ServiceService{
     @Autowired
     ServiceJPARepository repo;
 
-
     @Override
-    public List<Service> get(String query, Integer pageIndex, Integer pageSize) {
+    public List<Service> get(String query, Integer pageIndex, Integer pageSize) throws NoSuchServiceException{
 
         if (pageIndex == null || pageSize == null) 
-            return null; // "Pagination arguments cannot be equal to or less than zero."
+            throw new NoSuchServiceException("Pagination arguments cannot be equal to or less than zero.");
         
         if (pageIndex < 1 || pageSize < 1) 
-            return null; // "Pagination arguments required as query arguments."
+            throw new NoSuchServiceException("Pagination arguments required as query arguments.");
 
-            
         pageIndex *= pageSize;
 
         List<Service> services = repo.findByNameContaining(query);
@@ -45,5 +46,30 @@ public class DefaultServiceService implements ServiceService{
        
         
     }
+
+    @Override
+    public Service create(String name, String description, Boolean internal, User menager) {
+        var newService = new Service();
+        newService.setName(name);
+        newService.setDescription(description);
+        newService.setInternal(internal);
+        newService.setManager(menager);
+        return repo.save(newService);
+    }
+
+    @Override
+    public Optional<Service> findById(Long id) throws NoSuchEntityException {
+        var serviceFetch = repo.findById(id);
+        if (!serviceFetch.isPresent())
+            throw new NoSuchEntityException("Service not found.");
+        return serviceFetch;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        deleteById(id);
+    }
+
+    
     
 }

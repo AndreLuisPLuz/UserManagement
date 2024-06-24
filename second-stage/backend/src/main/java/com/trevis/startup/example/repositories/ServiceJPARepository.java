@@ -12,4 +12,5 @@ import com.trevis.startup.example.model.Service;
 public interface ServiceJPARepository 
     extends JpaRepository<Service, Long> {
     List<Service> findByNameContaining(String name);
+    
 }

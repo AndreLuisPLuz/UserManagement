@@ -1,6 +1,7 @@
 package com.trevis.startup.example.services;
 
-import com.trevis.startup.example.exceptions.BadHashConfigurationException;
+import java.util.Optional;
+
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.model.User;
@@ -10,4 +11,5 @@ public interface UserService {
     User create(String username, Department department, UserType type);
     Boolean updatePassword(Long id, String newPassword) throws NoSuchEntityException, BadHashConfigurationException;
     User get(String username) throws NoSuchEntityException;
+    Optional<User> findById(Long id) throws NoSuchEntityException;
 }
