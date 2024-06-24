@@ -1,10 +1,23 @@
+POST /auth
+{
+    "login": value,
+    "password": value
+}
+response:
+{
+    "message": value,
+}
+
+
+
 GET /service?query=value&page=page&size=size
 response:
 {
     "message": value,
     "data": [ { "id" : id, "name" : value, "description" : value, "intern" : true|false, "departament", value, "manager" :
     value }, ... ]
-} OKKKKKKKKKKKK
+} OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+
 
 
 POST /service
@@ -16,15 +29,9 @@ POST /service
 }
 response:
 {
-    "message": value,    
-} OKKKKKKKKKKKK
-
-
-DELETE /service/{id}
-response:
-{
     "message": value,
-} OKKKKKKKKKKKK
+} OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+
 
 
 PUT /service/{id}
@@ -36,17 +43,58 @@ PUT /service/{id}
 response:
 {
     "message": value,
-} OKKKKKKKKKKKK
+} OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+
+
+
+DELETE /service/{id}
+response:
+{
+    "message": value,
+} OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+
 
 
 POST /service
 {
     "name" : value,
     "description" : value,
-    "intern" : true|false,
-    
+    "intern" : true|false
 }
 response:
 {
     "message": value,
+}
+
+
+
+POST /user
+{
+    "login" : value,
+    "department" : id,
+    "role" : 0|1|2
+}
+response:
+{
+    "messages": [value..., ]
+} OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+
+
+
+PATCH /user/{id}
+{
+    "password" : value
+}
+response:
+{
+    "messages": [value..., ]
+} OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+
+
+
+GET /department
+response:
+{
+    "message": value,
+    "data": [ { "id" : id, "name", value}, ... ]
 }
