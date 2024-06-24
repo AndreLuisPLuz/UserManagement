@@ -13,7 +13,7 @@ import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.services.DepartmentService;
 
 @RestController
-public class ServiceDepartmentController {
+public class DepartmentController {
     
     @Autowired
     DepartmentService departmentService;
