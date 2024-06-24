@@ -4,5 +4,5 @@ public record ServicePayload(
     String name,
     String description,
     Boolean internal,
-    Long menager
+    Long manager
 ){ }

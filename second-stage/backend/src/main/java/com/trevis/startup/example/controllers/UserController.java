@@ -9,6 +9,7 @@ import com.trevis.startup.example.exceptions.BadHashConfigurationException;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.services.DepartmentService;
+import com.trevis.startup.example.services.PasswordService;
 import com.trevis.startup.example.services.UserService;
 import com.trevis.startup.example.services.UserTypeService;
 
@@ -29,6 +30,9 @@ public class UserController {
 
     @Autowired
     DepartmentService departmentService;
+
+    @Autowired
+    PasswordService passwordService;
 
     @Autowired
     UserTypeService typeService;
@@ -66,13 +70,20 @@ public class UserController {
         return ResponseEntity.ok().body(new MessagesResponse(messages));
     }
     
-    @PatchMapping("/api/user")
+    @PatchMapping("/api/user/{id}")
     public ResponseEntity<MessagesResponse> updateUserPassword(
             @PathVariable Long id,
             @RequestBody PasswordChangePayload payload
     ) {
         Boolean changedSuccesfully;
         List<String> messages = new ArrayList<>();
+
+        int passwordStrength = passwordService.verifyRules(payload.password());
+
+        if (passwordStrength != 5) {
+            messages.add(String.format("Password strength: %d", passwordStrength));
+            return ResponseEntity.badRequest().body(new MessagesResponse(messages));
+        }
 
         try {
             changedSuccesfully = userService.updatePassword(id, payload.password());

@@ -13,4 +13,11 @@ public class DefaultTypeService implements UserTypeService {
     public UserType getById(Long id) {
         return repo.getReferenceById(id);
     }
+
+    public UserType create(String type) {
+        var newUserType = new UserType();
+        newUserType.setType(type);
+
+        return repo.save(newUserType);
+    }
 }

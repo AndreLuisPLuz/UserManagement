@@ -45,4 +45,10 @@ public class MockDepartmentService implements DepartmentService {
         }
         return null;
     }
+
+    @Override
+    public Department createDepartment(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createDepartment'");
+    }
 }

@@ -50,12 +50,12 @@ public class ServiceController {
     }
 
 
-    @PostMapping("/api/serviceM")
+    @PostMapping("/api/service")
     public ResponseEntity<MessagesResponse> createService(@RequestBody  ServicePayload payload){
-        User menager;
+        User manager;
     
         try {
-            menager = userService.findById(payload.menager());
+            manager = userService.findById(payload.manager());
         } catch (NoSuchEntityException ex) {
             return ResponseEntity.notFound().build();
         }
@@ -64,7 +64,7 @@ public class ServiceController {
             payload.name(),
             payload.description(),
             payload.internal(),
-            menager
+            manager
         );
         
         List<String> messages = new ArrayList<>();
@@ -121,25 +121,25 @@ public class ServiceController {
     }
 
 
-    @PostMapping("/api/service")
-    public ResponseEntity<MessagesResponse> createService(@RequestBody  ServicePayloadPut payload){
-        var saveService = serviceService.create(
-            payload.name(),
-            payload.description(),
-            payload.internal(),
-            null
-        );
+    // @PostMapping("/api/service")
+    // public ResponseEntity<MessagesResponse> createService(@RequestBody  ServicePayloadPut payload){
+    //     var saveService = serviceService.create(
+    //         payload.name(),
+    //         payload.description(),
+    //         payload.internal(),
+    //         null
+    //     );
         
-        List<String> messages = new ArrayList<>();
+    //     List<String> messages = new ArrayList<>();
 
-        if (saveService == null) {
-            messages.add("Could not create service.");
-            return ResponseEntity.badRequest().body(new MessagesResponse(messages));
-        }
+    //     if (saveService == null) {
+    //         messages.add("Could not create service.");
+    //         return ResponseEntity.badRequest().body(new MessagesResponse(messages));
+    //     }
 
-        messages.add("Service created with success.");
+    //     messages.add("Service created with success.");
 
-        return ResponseEntity.ok().body(new MessagesResponse(messages));
-    }
+    //     return ResponseEntity.ok().body(new MessagesResponse(messages));
+    // }
 
 }

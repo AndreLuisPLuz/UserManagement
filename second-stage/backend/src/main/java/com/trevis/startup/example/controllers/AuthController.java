@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trevis.startup.example.dto.AuthToken;
 import com.trevis.startup.example.dto.payload.LoginPayload;
 import com.trevis.startup.example.dto.response.MessageResponse;
 import com.trevis.startup.example.exceptions.BadHashConfigurationException;
@@ -20,12 +21,12 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
-    @PostMapping("/auth")
+    @PostMapping("/api/auth")
     public ResponseEntity<MessageResponse> login(@RequestBody LoginPayload payload) {
-        String token;
+        AuthToken token;
 
         try {
-            token = authService.login(payload.login(), payload.password()).token();
+            token = authService.login(payload.login(), payload.password());
         } catch (NoSuchEntityException ex) {
             return ResponseEntity.notFound().build();
         } catch (NoSuchAlgorithmException ex) {
@@ -38,6 +39,12 @@ public class AuthController {
             );
         }
 
-        return ResponseEntity.ok().body(new MessageResponse(token));
+        if (token == null) {
+            return ResponseEntity.status(403).body(new MessageResponse(
+                "Passwords do not match."
+            ));
+        }
+
+        return ResponseEntity.ok().body(new MessageResponse(token.token()));
     }
 }

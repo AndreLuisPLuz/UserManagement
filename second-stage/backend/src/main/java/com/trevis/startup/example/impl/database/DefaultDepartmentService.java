@@ -28,4 +28,12 @@ public class DefaultDepartmentService implements DepartmentService {
 
         return departmentFetch.get();
     }
+
+    public Department createDepartment(String name) {
+        var department = new Department();
+        department.setName(name);
+
+        var createdDepartment = repo.save(department);
+        return createdDepartment;
+    }
 }
