@@ -26,37 +26,37 @@ public class DependenciesConfiguration {
 
     @Bean
     @Scope
-    public DepartmentService departmentService() {
+    protected DepartmentService departmentService() {
         return new DefaultDepartmentService();
     }
 
     @Bean
     @Scope
-    public UserTypeService userTypeService() {
+    protected UserTypeService userTypeService() {
         return new DefaultTypeService();
     }
 
     @Bean
     @Scope
-    public UserService userService() {
+    protected UserService userService() {
         return new DefaultUserService();
     }
 
     @Bean
     @Scope
-    public ServiceService serviceService() {
+    protected ServiceService serviceService() {
         return new DefaultServiceService();
     }
 
     @Bean
     @Scope
-    public AuthService authService() {
+    protected AuthService authService() {
         return new JwtAuthService();
     }
 
     @Bean
     @Scope
-    public PasswordService passwordService() {
+    protected PasswordService passwordService() {
         return new PBKDF2PasswordService();
     }
 }
