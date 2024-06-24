@@ -2,7 +2,6 @@ package com.trevis.startup.example.impl.mock;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Service;
@@ -62,7 +61,7 @@ public class MockServiceService implements ServiceService{
     }
 
     @Override
-    public Optional<Service> findById(Long id) throws NoSuchEntityException {
+    public Service findById(Long id) throws NoSuchEntityException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }

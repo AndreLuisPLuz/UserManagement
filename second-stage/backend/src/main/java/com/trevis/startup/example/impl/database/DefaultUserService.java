@@ -59,5 +59,4 @@ public class DefaultUserService implements UserService {
             throw new NoSuchEntityException("User not found.");
         return userFetch;
     }
-
 }
