@@ -1,9 +1,7 @@
 package com.trevis.startup.example.controllers;
 
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,9 +50,9 @@ public class ServiceController {
     }
 
 
-    @PostMapping("/api/service")
+    @PostMapping("/api/serviceM")
     public ResponseEntity<MessagesResponse> createService(@RequestBody  ServicePayload payload){
-        Optional<User> menager;
+        User menager;
     
         try {
             menager = userService.findById(payload.menager());
@@ -66,7 +64,7 @@ public class ServiceController {
             payload.name(),
             payload.description(),
             payload.internal(),
-            menager.get()
+            menager
         );
         
         List<String> messages = new ArrayList<>();
@@ -120,6 +118,28 @@ public class ServiceController {
         messages.add("Service updated with success.");
         return ResponseEntity.ok().body(new MessagesResponse(messages));
 
+    }
+
+
+    @PostMapping("/api/service")
+    public ResponseEntity<MessagesResponse> createService(@RequestBody  ServicePayloadPut payload){
+        var saveService = serviceService.create(
+            payload.name(),
+            payload.description(),
+            payload.internal(),
+            null
+        );
+        
+        List<String> messages = new ArrayList<>();
+
+        if (saveService == null) {
+            messages.add("Could not create service.");
+            return ResponseEntity.badRequest().body(new MessagesResponse(messages));
+        }
+
+        messages.add("Service created with success.");
+
+        return ResponseEntity.ok().body(new MessagesResponse(messages));
     }
 
 }

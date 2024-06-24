@@ -49,11 +49,16 @@ public class UserController {
             department,
             type
         );
-
+        
         List<String> messages = new ArrayList<>();
-
+        
         if (savedUser == null) {
             messages.add("Could not create user.");
+            return ResponseEntity.badRequest().body(new MessagesResponse(messages));
+        }
+
+        if (savedUser.getPassword() == null) {
+            messages.add("error when setting default password");
             return ResponseEntity.badRequest().body(new MessagesResponse(messages));
         }
         
