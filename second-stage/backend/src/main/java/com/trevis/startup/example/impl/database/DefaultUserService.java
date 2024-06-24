@@ -1,7 +1,5 @@
 package com.trevis.startup.example.impl.database;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.trevis.startup.example.exceptions.BadHashConfigurationException;
@@ -21,10 +19,18 @@ public class DefaultUserService implements UserService {
     PasswordService passwordService;
 
     public User create(String username, Department department, UserType type) {
+        String hashedPassword;
+        try {
+            hashedPassword = passwordService.applyCryptography("Ets@Bosch2024");
+        } catch (BadHashConfigurationException ex) {
+            return null;
+        }
+
         var newUser = new User();
         newUser.setUsername(username);
         newUser.setDepartment(department);
         newUser.setUsertype(type);
+        newUser.setPassword(hashedPassword);
         return repo.save(newUser);
     }
 
@@ -53,10 +59,10 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public Optional<User> findById(Long id) throws NoSuchEntityException{
+    public User findById(Long id) throws NoSuchEntityException{
         var userFetch = repo.findById(id);
         if (!userFetch.isPresent())
             throw new NoSuchEntityException("User not found.");
-        return userFetch;
+        return userFetch.get();
     }
 }

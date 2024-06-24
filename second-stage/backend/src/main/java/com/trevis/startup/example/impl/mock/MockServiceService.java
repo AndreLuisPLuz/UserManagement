@@ -11,6 +11,7 @@ import com.trevis.startup.example.services.ServiceService;
 public class MockServiceService implements ServiceService{
 
     private static List<Service> services = new ArrayList<>();
+    private Long helper_id;
 
     public MockServiceService(){
         var newService = new Service();
@@ -26,6 +27,7 @@ public class MockServiceService implements ServiceService{
         newService.setDescription("Second service");
 
         services.add(newService);
+        helper_id = 2l;
     }
 
     @Override
@@ -56,25 +58,37 @@ public class MockServiceService implements ServiceService{
 
     @Override
     public Service create(String name, String description, Boolean internal, User menager) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        helper_id += 1;
+        Service newService = new Service();
+        newService.setName(name);
+        newService.setDescription(description);
+        newService.setInternal(internal);
+        newService.setManager(menager);
+        newService.setId(helper_id);
+
+        services.add(newService);
+        return newService;
     }
 
     @Override
     public Service findById(Long id) throws NoSuchEntityException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        for (Service service : services) {
+            if(id == service.getId())
+                return service;
+        }
+        return null;
     }
 
     @Override
     public void deleteById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+        for (Service service : services) {
+            if(id == service.getId())
+                services.remove(service);
+        }
     }
 
     @Override
     public void save(Service service) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        services.add(service);
     }
 }

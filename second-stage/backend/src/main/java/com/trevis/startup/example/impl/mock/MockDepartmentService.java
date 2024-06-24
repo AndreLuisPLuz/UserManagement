@@ -39,7 +39,10 @@ public class MockDepartmentService implements DepartmentService {
 
     @Override
     public Department getById(Long id) throws NoSuchEntityException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        for (Department department : departments) {
+            if (id == department.getId()) 
+                return department;
+        }
+        return null;
     }
 }
