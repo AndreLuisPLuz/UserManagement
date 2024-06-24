@@ -2,7 +2,9 @@ package com.trevis.startup.example.impl.mock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.model.User;
 import com.trevis.startup.example.model.UserType;
@@ -44,5 +46,11 @@ public class MockUserService implements UserService{
             }
         }
         return null;
+    }
+
+    @Override
+    public Optional<User> findById(Long id) throws NoSuchEntityException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 }

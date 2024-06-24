@@ -17,9 +17,14 @@ POST /service
 response:
 {
     "message": value,    
-} OKKKKKKKKK
+} OKKKKKKKKKKKK
 
 
+DELETE /service/{id}
+response:
+{
+    "message": value,
+} OKKKKKKKKKKKK
 
 
 PUT /service/{id}
@@ -31,22 +36,15 @@ PUT /service/{id}
 response:
 {
     "message": value,
-}
-
-
-
-DELETE /service/{id}
-response:
-{
-    "message": value,
-}
+} OKKKKKKKKKKKK
 
 
 POST /service
 {
     "name" : value,
     "description" : value,
-    "intern" : true|false
+    "intern" : true|false,
+    
 }
 response:
 {

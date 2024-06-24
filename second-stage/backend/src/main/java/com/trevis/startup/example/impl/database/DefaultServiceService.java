@@ -2,7 +2,6 @@ package com.trevis.startup.example.impl.database;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -58,16 +57,22 @@ public class DefaultServiceService implements ServiceService{
     }
 
     @Override
-    public Optional<Service> findById(Long id) throws NoSuchEntityException {
+    public Service findById(Long id) throws NoSuchEntityException {
         var serviceFetch = repo.findById(id);
         if (!serviceFetch.isPresent())
             throw new NoSuchEntityException("Service not found.");
-        return serviceFetch;
+
+        return serviceFetch.get();
     }
 
     @Override
     public void deleteById(Long id) {
         deleteById(id);
+    }
+
+    @Override
+    public void save(Service entity) {
+        repo.save(entity);
     }
 
     

@@ -2,8 +2,11 @@ package com.trevis.startup.example.impl.mock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Service;
+import com.trevis.startup.example.model.User;
 import com.trevis.startup.example.services.ServiceService;
 
 public class MockServiceService implements ServiceService{
@@ -50,5 +53,29 @@ public class MockServiceService implements ServiceService{
 
             return pageServices;
         }
+    }
+
+    @Override
+    public Service create(String name, String description, Boolean internal, User menager) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    }
+
+    @Override
+    public Optional<Service> findById(Long id) throws NoSuchEntityException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+    }
+
+    @Override
+    public void save(Service service) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'save'");
     }
 }

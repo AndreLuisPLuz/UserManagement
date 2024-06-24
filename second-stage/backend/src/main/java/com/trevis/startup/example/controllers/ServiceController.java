@@ -4,6 +4,7 @@ package com.trevis.startup.example.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +12,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.trevis.startup.example.dto.payload.ServicePayload;
+import com.trevis.startup.example.dto.payload.ServicePayloadPut;
 import com.trevis.startup.example.dto.response.DataResponse;
 import com.trevis.startup.example.dto.response.MessagesResponse;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
@@ -81,12 +85,10 @@ public class ServiceController {
     @DeleteMapping("/api/service/{id}")
     public ResponseEntity<MessagesResponse> deleteService(@PathVariable Long id){
         try {
-            var service = userService.findById(id);
+            serviceService.findById(id);
         } catch (NoSuchEntityException ex) {
             return ResponseEntity.notFound().build();
         }
-        
-
 
         serviceService.deleteById(id);
 
@@ -94,6 +96,31 @@ public class ServiceController {
         messages.add("Service deleted with success.");
 
         return ResponseEntity.ok().body(new MessagesResponse(messages));
+    }
+
+    @PutMapping("/api/service/{id}")
+    public ResponseEntity<MessagesResponse> putService(
+        @RequestBody ServicePayloadPut payload,
+        @PathVariable Long id
+    ) {
+        List<String> messages = new ArrayList<>();
+        Service service;
+
+        try {
+            service = serviceService.findById(id);
+        } catch (NoSuchEntityException ex) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        service.setName(payload.name());
+        service.setDescription(payload.description());
+        service.setInternal(payload.internal());
+
+        serviceService.save(service);
+
+        messages.add("Service updated with success.");
+        return ResponseEntity.ok().body(new MessagesResponse(messages));
+
     }
 
 }
