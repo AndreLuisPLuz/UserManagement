@@ -13,7 +13,7 @@ import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.services.DepartmentService;
 
 @RestController
-public class ServiceDepartment {
+public class ServiceDepartmentController {
     
     @Autowired
     DepartmentService departmentService;
@@ -21,6 +21,7 @@ public class ServiceDepartment {
     @GetMapping("/api/department")
     public ResponseEntity<DataResponse<Department>> getAllDepartments(){
         List<Department> allDepartments = departmentService.getAll();
-
+        return ResponseEntity.ok().body(new DataResponse<>("Departments found with success", allDepartments));
     }
+
 }
