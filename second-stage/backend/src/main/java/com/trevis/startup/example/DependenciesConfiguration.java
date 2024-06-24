@@ -9,9 +9,9 @@ import com.trevis.startup.example.impl.database.DefaultDepartmentService;
 import com.trevis.startup.example.impl.database.DefaultServiceService;
 import com.trevis.startup.example.impl.database.DefaultTypeService;
 import com.trevis.startup.example.impl.database.DefaultUserService;
-import com.trevis.startup.example.impl.mock.MockDepartmentService;
-import com.trevis.startup.example.impl.mock.MockServiceService;
-import com.trevis.startup.example.impl.mock.MockUserService;
+// import com.trevis.startup.example.impl.mock.MockDepartmentService;
+// import com.trevis.startup.example.impl.mock.MockServiceService;
+// import com.trevis.startup.example.impl.mock.MockUserService;
 import com.trevis.startup.example.impl.security.JwtAuthService;
 import com.trevis.startup.example.impl.security.PBKDF2PasswordService;
 import com.trevis.startup.example.services.AuthService;
@@ -48,8 +48,6 @@ public class DependenciesConfiguration {
         return new DefaultServiceService();
     }
 
-    
-
     @Bean
     @Scope
     public AuthService authService() {
@@ -61,7 +59,4 @@ public class DependenciesConfiguration {
     public PasswordService passwordService() {
         return new PBKDF2PasswordService();
     }
-
-
-
 }
