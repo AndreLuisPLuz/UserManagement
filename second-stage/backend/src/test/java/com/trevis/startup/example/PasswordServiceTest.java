@@ -1,5 +1,6 @@
 package com.trevis.startup.example;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,8 +18,10 @@ class PasswordServiceTest {
 
     @Test
     void applyCryptographyTest(){
-        String cryptografy = (passService.applyCryptography("123"));
-        assertTrue(passService.verifyCryptography("123", cryptografy));
+        String cryptografy = assertDoesNotThrow(() -> passService.applyCryptography("123"));
+        Boolean wasSuccessful = assertDoesNotThrow(() -> passService.verifyCryptography("123", cryptografy));
+
+        assertTrue(wasSuccessful);
     }
 
     @Test
@@ -29,6 +32,4 @@ class PasswordServiceTest {
         assertEquals(passService.verifyRules("Joaoemoo"), "4");
         assertEquals(passService.verifyRules("JoaoEmoo8"), "5");
     }
-
-    
 }
