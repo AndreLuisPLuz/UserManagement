@@ -81,7 +81,8 @@ public class UserController {
         int passwordStrength = passwordService.verifyRules(payload.password());
 
         if (passwordStrength != 5) {
-            messages.add(String.format("Password strength: %d", passwordStrength));
+            messages.add("The password is not strong enough.");
+            messages.add(String.format("%d", passwordStrength));
             return ResponseEntity.badRequest().body(new MessagesResponse(messages));
         }
 
@@ -98,8 +99,8 @@ public class UserController {
             messages.add("Password does not meet requirements.");
             return ResponseEntity.badRequest().body(new MessagesResponse(messages));
         }
-
         messages.add("Password changed with success.");
+        messages.add(String.format("%d", passwordStrength));
         return ResponseEntity.ok().body(new MessagesResponse(messages));
     }
 }

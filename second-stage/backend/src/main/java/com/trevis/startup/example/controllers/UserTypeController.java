@@ -19,7 +19,7 @@
 //     @Autowired
 //     UserTypeService typeService;
 
-//    
+   
 //     @PostMapping("/api/type")
 //     public ResponseEntity<MessageResponse> createUserType(@RequestParam String type) {
 //        typeService.create(type);
