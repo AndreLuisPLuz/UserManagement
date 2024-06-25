@@ -1,9 +1,11 @@
 package com.trevis.startup.example.impl.database;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.trevis.startup.example.dto.response.DataDepartment;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Department;
 import com.trevis.startup.example.repositories.DepartmentJPARepository;
@@ -15,8 +17,12 @@ public class DefaultDepartmentService implements DepartmentService {
     DepartmentJPARepository repo;
 
     @Override
-    public List<Department> getAll() {
-        return repo.findAll();
+    public List<DataDepartment> getAll() {
+        List<Department> allDepartments = repo.findAll();
+
+        return allDepartments.stream()
+            .map( s -> DataDepartment.buildFromEntity(s))
+            .collect(Collectors.toList());
     }
 
     @Override

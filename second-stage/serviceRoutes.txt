@@ -12,7 +12,7 @@ response:
 
 
 
----------------  NÃO FUNCIONA ---------------
+--------------- FUNCIONA ---------------
 GET /service?query=value&page=page&size=size
 response:
 {
@@ -38,8 +38,19 @@ response:
     "message": value,
 } 
 
+--------------- Não sei ---------------
+POST /service
+{
+    "name" : value,
+    "description" : value,
+    "intern" : true|false
+}
+response:
+{
+    "message": value,
+}
 
-
+--------------- FUNCIONA ---------------
 PUT /service/{id}
 {
     "name" : value,
@@ -52,26 +63,12 @@ response:
 } 
 
 
-
+--------------- FUNCIONA ---------------
 DELETE /service/{id}
 response:
 {
     "message": value,
 } 
-
-
-
-POST /service
-{
-    "name" : value,
-    "description" : value,
-    "intern" : true|false
-}
-response:
-{
-    "message": value,
-}
-
 
 
 --------------- FUNCIONA ---------------
@@ -85,7 +82,6 @@ response:
 {
     "messages": [value..., ]
 } 
-
 
 
 --------------- FUNCIONA --------------- 

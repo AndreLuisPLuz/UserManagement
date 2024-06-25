@@ -81,15 +81,17 @@ public class ServiceController {
 
     @DeleteMapping("/api/service/{id}")
     public ResponseEntity<MessagesResponse> deleteService(@PathVariable Long id){
+        List<String> messages = new ArrayList<>();
+        
         try {
             serviceService.findById(id);
         } catch (NoSuchEntityException ex) {
-            return ResponseEntity.notFound().build();
+            messages.add("Service not found.");
+            return ResponseEntity.status(404).body(new MessagesResponse(messages));
         }
 
         serviceService.deleteById(id);
 
-        List<String> messages = new ArrayList<>();
         messages.add("Service deleted with success.");
 
         return ResponseEntity.ok().body(new MessagesResponse(messages));

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.trevis.startup.example.dto.response.DataResponse;
 import com.trevis.startup.example.dto.response.DataService;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
@@ -22,6 +21,10 @@ public class DefaultServiceService implements ServiceService{
 
     @Override
     public DataResponse<DataService> get(String query, Integer pageIndex, Integer pageSize) throws NoSuchServiceException{
+
+        if (pageIndex < 1 || pageSize < 1) 
+            return new DataResponse<>("Pagination arguments cannot be equal to or less than zero.", null);
+
         List<DataService> dataService = new ArrayList<>();
         
         Integer helper = (pageIndex * pageSize) - pageSize;
@@ -42,7 +45,7 @@ public class DefaultServiceService implements ServiceService{
         if (services.size() <= pageSize){
             dataService = services.stream()
             .map( s -> DataService.buildFromEntity(s))
-            .collect(Collectors.toList());;
+            .collect(Collectors.toList());
             return new DataResponse<>("Matching services found.", dataService);
         }
         List<Service> pageServices = new ArrayList<>();
@@ -82,7 +85,7 @@ public class DefaultServiceService implements ServiceService{
 
     @Override
     public void deleteById(Long id) {
-        deleteById(id);
+        repo.deleteById(id);
     }
 
     @Override

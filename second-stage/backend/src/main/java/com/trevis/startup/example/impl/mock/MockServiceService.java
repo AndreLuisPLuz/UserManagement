@@ -2,7 +2,10 @@ package com.trevis.startup.example.impl.mock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.trevis.startup.example.dto.response.DataResponse;
+import com.trevis.startup.example.dto.response.DataService;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Service;
 import com.trevis.startup.example.model.User;
@@ -31,29 +34,40 @@ public class MockServiceService implements ServiceService{
     }
 
     @Override
-    public List<Service> get(String query, Integer pageIndex, Integer pageSize){
+    public DataResponse<DataService> get(String query, Integer pageIndex, Integer pageSize){
+        List<DataService> dataService = new ArrayList<>();
+        List<Service> pageServices = new ArrayList<>();
+
+        if (pageIndex < 1 || pageSize < 1) 
+            return new DataResponse<>("Pagination arguments cannot be equal to or less than zero.", null);
+
         if (query != null) {
 
             pageIndex *= pageSize;
 
             var filteredServices = services.stream().filter(u -> u.getName().contains(query)).toList();
 
-            List<Service> pageServices = new ArrayList<>();
 
             for(int i = pageIndex - pageSize; i < pageIndex; i ++){
                 pageServices.add(filteredServices.get(i));
             }
 
-            return pageServices;
+            dataService = pageServices.stream()
+                .map( s -> DataService.buildFromEntity(s))
+                .collect(Collectors.toList());
+
         } else {
-            List<Service> pageServices = new ArrayList<>();
 
             for(int i = pageIndex - pageSize; i < pageIndex; i ++){
                 pageServices.add(services.get(i));
             }
 
-            return pageServices;
+            dataService = pageServices.stream()
+                .map( s -> DataService.buildFromEntity(s))
+                .collect(Collectors.toList());
+
         }
+        return new DataResponse<>("Matching services found.", dataService);
     }
 
     @Override
