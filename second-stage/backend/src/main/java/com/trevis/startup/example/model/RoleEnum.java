@@ -1,9 +1,9 @@
 package com.trevis.startup.example.model;
 
 public enum RoleEnum {
-    Collaborator(0l),
-    Administrator(1l),
-    Manager(2l);
+    Collaborator(1l),
+    Administrator(2l),
+    Manager(3l);
 
     private Long id;
 

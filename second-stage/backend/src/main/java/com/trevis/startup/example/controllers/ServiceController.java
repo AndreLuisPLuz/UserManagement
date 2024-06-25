@@ -21,12 +21,14 @@ import com.trevis.startup.example.dto.response.DataService;
 import com.trevis.startup.example.dto.response.MessagesResponse;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Service;
-import com.trevis.startup.example.model.User;
 import com.trevis.startup.example.services.ServiceService;
 import com.trevis.startup.example.services.UserService;
+import com.trevis.startup.example.sessions.UserSession;
 
 @RestController
 public class ServiceController {
+    @Autowired
+    UserSession userSession;
 
     @Autowired
     ServiceService serviceService;
@@ -51,23 +53,22 @@ public class ServiceController {
 
 
     @PostMapping("/api/service")
-    public ResponseEntity<MessagesResponse> createService(@RequestBody  ServicePayload payload){
-        User manager;
-    
-        try {
-            manager = userService.findById(payload.manager());
-        } catch (NoSuchEntityException ex) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<MessagesResponse> createService(@RequestBody  ServicePayload payload) throws NoSuchEntityException {
+        var requestingUserId = userSession.getId();
+        var requestingUser = userService.findById(requestingUserId);
+
+        List<String> messages = new ArrayList<>();
+        if (requestingUser.getUsertype().getId() != 3) {
+            messages.add("Action not allowed.");
+            return ResponseEntity.status(403).body(new MessagesResponse(messages));
         }
 
         var saveService = serviceService.create(
             payload.name(),
             payload.description(),
             payload.internal(),
-            manager
+            requestingUser
         );
-        
-        List<String> messages = new ArrayList<>();
 
         if (saveService == null) {
             messages.add("Could not create service.");

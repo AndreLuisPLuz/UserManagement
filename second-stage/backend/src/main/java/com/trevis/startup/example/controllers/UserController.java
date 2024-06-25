@@ -12,6 +12,7 @@ import com.trevis.startup.example.services.DepartmentService;
 import com.trevis.startup.example.services.PasswordService;
 import com.trevis.startup.example.services.UserService;
 import com.trevis.startup.example.services.UserTypeService;
+import com.trevis.startup.example.sessions.UserSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 public class UserController {
     @Autowired
+    UserSession userSession;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -38,7 +42,16 @@ public class UserController {
     UserTypeService typeService;
 
     @PostMapping("/api/user")
-    public ResponseEntity<MessagesResponse> createUser(@RequestBody UserPayload payload) {
+    public ResponseEntity<MessagesResponse> createUser(@RequestBody UserPayload payload) throws NoSuchEntityException {
+        var requestingUserId = userSession.getId();
+        var requestingUser = userService.findById(requestingUserId);
+
+        List<String> messages = new ArrayList<>();
+        if (requestingUser.getUsertype().getId() != 2) {
+            messages.add("Action not allowed.");
+            return ResponseEntity.status(403).body(new MessagesResponse(messages));
+        }
+
         var type = typeService.getById(payload.role().getId());
         Department department;
 
@@ -53,9 +66,7 @@ public class UserController {
             department,
             type
         );
-        
-        List<String> messages = new ArrayList<>();
-        
+
         if (savedUser == null) {
             messages.add("Could not create user.");
             return ResponseEntity.badRequest().body(new MessagesResponse(messages));
@@ -65,16 +76,15 @@ public class UserController {
             messages.add("error when setting default password");
             return ResponseEntity.badRequest().body(new MessagesResponse(messages));
         }
-        
+
         messages.add("User created with success.");
         return ResponseEntity.ok().body(new MessagesResponse(messages));
     }
-    
+
     @PatchMapping("/api/user/{id}")
     public ResponseEntity<MessagesResponse> updateUserPassword(
             @PathVariable Long id,
-            @RequestBody PasswordChangePayload payload
-    ) {
+            @RequestBody PasswordChangePayload payload) {
         Boolean changedSuccesfully;
         List<String> messages = new ArrayList<>();
 
