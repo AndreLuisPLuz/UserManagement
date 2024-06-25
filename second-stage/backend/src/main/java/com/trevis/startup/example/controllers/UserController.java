@@ -77,14 +77,7 @@ public class UserController {
     ) {
         Boolean changedSuccesfully;
         List<String> messages = new ArrayList<>();
-
-        int passwordStrength = passwordService.verifyRules(payload.password());
-
-        if (passwordStrength != 5) {
-            messages.add(String.format("Password strength: %d", passwordStrength));
-            return ResponseEntity.badRequest().body(new MessagesResponse(messages));
-        }
-
+        
         try {
             changedSuccesfully = userService.updatePassword(id, payload.password());
         } catch (NoSuchEntityException ex) {
@@ -93,6 +86,9 @@ public class UserController {
             messages.add("Bad hash configuration on the serve-side.");
             return ResponseEntity.internalServerError().body(new MessagesResponse(messages));
         }
+        
+        int passwordStrength = passwordService.verifyRules(payload.password());
+        messages.add(String.format("%d", passwordStrength));
 
         if (!changedSuccesfully) {
             messages.add("Password does not meet requirements.");

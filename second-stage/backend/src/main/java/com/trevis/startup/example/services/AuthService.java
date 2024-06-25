@@ -1,7 +1,6 @@
 package com.trevis.startup.example.services;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.trevis.startup.example.dto.AuthToken;
@@ -18,7 +17,7 @@ public interface AuthService {
             NoSuchEntityException,
             BadHashConfigurationException;
     
-    public DecodedJWT decode(String token, Map<String, String> claimsList)
+    public DecodedJWT decode(String token)
         throws
             NoSuchAlgorithmException,
             InvalidAuthAttempt;

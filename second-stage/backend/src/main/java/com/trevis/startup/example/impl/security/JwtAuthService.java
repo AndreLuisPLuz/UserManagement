@@ -5,8 +5,8 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.time.Instant;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -76,6 +76,7 @@ public class JwtAuthService implements AuthService {
             token = JWT.create()
                 .withIssuer("Andrezinho")
                 .withClaim("userId", user.getId().toString())
+                .withExpiresAt(Instant.now().plusSeconds(28800))
                 .sign(algorithm);
         } catch (JWTCreationException ex) {
             throw new ClaimsConversionException(
@@ -86,7 +87,7 @@ public class JwtAuthService implements AuthService {
         return new AuthToken("Login was successful", token);
     }
 
-    public DecodedJWT decode(String token, Map<String, String> claimsList)
+    public DecodedJWT decode(String token)
         throws
             NoSuchAlgorithmException,
             InvalidAuthAttempt {
@@ -101,13 +102,6 @@ public class JwtAuthService implements AuthService {
         Algorithm algorithm = Algorithm.RSA512(publicKey, privateKey);
         Verification verification = JWT.require(algorithm)
             .withIssuer("Andrezinho");
-        
-        for (Map.Entry<String, String> claim : claimsList.entrySet()) {
-            verification = verification.withClaim(
-                claim.getKey(),
-                claim.getValue()
-            );
-        } 
 
         try {
             JWTVerifier verifier = verification.build();

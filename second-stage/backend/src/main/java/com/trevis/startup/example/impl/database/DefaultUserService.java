@@ -34,7 +34,10 @@ public class DefaultUserService implements UserService {
         return repo.save(newUser);
     }
 
-    public Boolean updatePassword(Long id, String newPassword) throws NoSuchEntityException, BadHashConfigurationException {
+    public Boolean updatePassword(Long id, String newPassword)
+        throws
+            NoSuchEntityException,
+            BadHashConfigurationException {
         var userFetch = repo.findById(id);
         if (!userFetch.isPresent())
             throw new NoSuchEntityException("User not found.");
@@ -45,6 +48,8 @@ public class DefaultUserService implements UserService {
 
         var user = userFetch.get();
         user.setPassword(passwordService.applyCryptography(newPassword));
+
+        repo.save(user);
 
         return true;
     }

@@ -14,12 +14,10 @@ public class DefaultDepartmentService implements DepartmentService {
     @Autowired
     DepartmentJPARepository repo;
 
-    @Override
     public List<Department> getAll() {
         return repo.findAll();
     }
 
-    @Override
     public Department getById(Long id) throws NoSuchEntityException {
         var departmentFetch = repo.findById(id);
         if (!departmentFetch.isPresent()) {
