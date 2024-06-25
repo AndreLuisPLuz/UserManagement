@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trevis.startup.example.dto.payload.ServicePayload;
 import com.trevis.startup.example.dto.payload.ServicePayloadPut;
 import com.trevis.startup.example.dto.response.DataResponse;
+import com.trevis.startup.example.dto.response.DataService;
 import com.trevis.startup.example.dto.response.MessagesResponse;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Service;
@@ -34,15 +35,14 @@ public class ServiceController {
     UserService userService;
     
     @GetMapping("/api/service")
-    public ResponseEntity<DataResponse<Service>> getQueryServices(
+    public ResponseEntity<DataResponse<DataService>> getQueryServices(
             @RequestParam String query,
             @RequestParam Integer pageIndex,
             @RequestParam Integer pageSize
     ){
         try {
-            List<Service> allServices = serviceService.get(query, pageIndex, pageSize);
-            
-            return ResponseEntity.ok().body(new DataResponse<>("Matching services found.", allServices));
+            DataResponse<DataService> response = serviceService.get(query, pageIndex, pageSize);
+            return ResponseEntity.ok().body(response);
             
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -81,15 +81,17 @@ public class ServiceController {
 
     @DeleteMapping("/api/service/{id}")
     public ResponseEntity<MessagesResponse> deleteService(@PathVariable Long id){
+        List<String> messages = new ArrayList<>();
+        
         try {
             serviceService.findById(id);
         } catch (NoSuchEntityException ex) {
-            return ResponseEntity.notFound().build();
+            messages.add("Service not found.");
+            return ResponseEntity.status(404).body(new MessagesResponse(messages));
         }
 
         serviceService.deleteById(id);
 
-        List<String> messages = new ArrayList<>();
         messages.add("Service deleted with success.");
 
         return ResponseEntity.ok().body(new MessagesResponse(messages));

@@ -94,8 +94,8 @@ public class UserController {
             messages.add("Password does not meet requirements.");
             return ResponseEntity.badRequest().body(new MessagesResponse(messages));
         }
-
         messages.add("Password changed with success.");
+        messages.add(String.format("%d", passwordStrength));
         return ResponseEntity.ok().body(new MessagesResponse(messages));
     }
 }

@@ -4,5 +4,5 @@ import java.util.List;
 
 public record DataResponse<T>(
     String message,
-    List<T> data) 
-{ }
+    List<T> data
+){ }

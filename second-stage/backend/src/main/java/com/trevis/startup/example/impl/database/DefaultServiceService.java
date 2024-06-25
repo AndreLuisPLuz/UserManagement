@@ -2,9 +2,11 @@ package com.trevis.startup.example.impl.database;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import com.trevis.startup.example.dto.response.DataResponse;
+import com.trevis.startup.example.dto.response.DataService;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.exceptions.NoSuchServiceException;
 import com.trevis.startup.example.model.Service;
@@ -18,31 +20,47 @@ public class DefaultServiceService implements ServiceService{
     ServiceJPARepository repo;
 
     @Override
-    public List<Service> get(String query, Integer pageIndex, Integer pageSize) throws NoSuchServiceException{
+    public DataResponse<DataService> get(String query, Integer pageIndex, Integer pageSize) throws NoSuchServiceException{
 
-        if (pageIndex == null || pageSize == null) 
-            throw new NoSuchServiceException("Pagination arguments cannot be equal to or less than zero.");
-        
         if (pageIndex < 1 || pageSize < 1) 
-            throw new NoSuchServiceException("Pagination arguments required as query arguments.");
+            return new DataResponse<>("Pagination arguments cannot be equal to or less than zero.", null);
 
+        List<DataService> dataService = new ArrayList<>();
+        
+        Integer helper = (pageIndex * pageSize) - pageSize;
+        
         pageIndex *= pageSize;
 
-        List<Service> services = repo.findByNameContaining(query);
+        List<Service> services;
+
+        if (query.length() == 0)
+            services = repo.findAll();
+        else
+            services = repo.findByNameContaining(query);
         
+        if ( services.size() <= helper ) 
+            return new DataResponse<>("Invalid page index.", null);
+            
+            
+        if (services.size() <= pageSize){
+            dataService = services.stream()
+            .map( s -> DataService.buildFromEntity(s))
+            .collect(Collectors.toList());
+            return new DataResponse<>("Matching services found.", dataService);
+        }
         List<Service> pageServices = new ArrayList<>();
 
-        if (services.size() <= pageSize) 
-            return services;
-
-        for(int i = pageIndex - pageSize; i < pageIndex; i ++){
+        for(int i = pageIndex - pageSize; i < pageIndex; i++){
             if (i == services.size()) 
                 break;    
             pageServices.add(services.get(i));
         }
 
-        return pageServices;
-       
+        dataService = pageServices.stream()
+            .map( s -> DataService.buildFromEntity(s))
+            .collect(Collectors.toList());
+
+        return new DataResponse<>("Matching services found.", dataService);
         
     }
 
@@ -67,7 +85,7 @@ public class DefaultServiceService implements ServiceService{
 
     @Override
     public void deleteById(Long id) {
-        deleteById(id);
+        repo.deleteById(id);
     }
 
     @Override
