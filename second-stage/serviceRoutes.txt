@@ -30,19 +30,6 @@ POST /service
 {
     "name" : value,
     "description" : value,
-    "intern" : true|false,
-    "managerId" : id
-}
-response:
-{
-    "message": value,
-} 
-
---------------- Não sei ---------------
-POST /service
-{
-    "name" : value,
-    "description" : value,
     "intern" : true|false
 }
 response:
