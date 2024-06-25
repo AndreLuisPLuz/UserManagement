@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trevis.startup.example.dto.payload.ServicePayload;
 import com.trevis.startup.example.dto.payload.ServicePayloadPut;
 import com.trevis.startup.example.dto.response.DataResponse;
+import com.trevis.startup.example.dto.response.DataService;
 import com.trevis.startup.example.dto.response.MessagesResponse;
 import com.trevis.startup.example.exceptions.NoSuchEntityException;
 import com.trevis.startup.example.model.Service;
@@ -34,15 +35,14 @@ public class ServiceController {
     UserService userService;
     
     @GetMapping("/api/service")
-    public ResponseEntity<DataResponse<Service>> getQueryServices(
+    public ResponseEntity<DataResponse<DataService>> getQueryServices(
             @RequestParam String query,
             @RequestParam Integer pageIndex,
             @RequestParam Integer pageSize
     ){
         try {
-            List<Service> allServices = serviceService.get(query, pageIndex, pageSize);
-            
-            return ResponseEntity.ok().body(new DataResponse<>("Matching services found.", allServices));
+            DataResponse<DataService> response = serviceService.get(query, pageIndex, pageSize);
+            return ResponseEntity.ok().body(response);
             
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
