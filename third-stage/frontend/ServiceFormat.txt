@@ -1,0 +1,13 @@
+{
+    [
+        {
+            "id": 1,
+            "name": "string",
+            "description": "abuble",
+            "intern": true,
+            "departmentId": 1,
+            "managerId": 1
+        },
+        {...}
+    ]
+}

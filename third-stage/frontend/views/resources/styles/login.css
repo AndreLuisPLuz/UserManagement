@@ -39,7 +39,7 @@
     border: solid 1px #505a5b;
 }
 
-input[type="button"] {
+input[type="submit"] {
     padding-left: 15px;
     padding-right: 15px;
 

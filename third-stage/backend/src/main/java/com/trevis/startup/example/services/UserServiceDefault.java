@@ -1,7 +1,6 @@
 package com.trevis.startup.example.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.trevis.startup.example.dto.requests.UserCreationDto;
 import com.trevis.startup.example.dto.requests.UserUpdateDto;
@@ -15,7 +14,6 @@ import com.trevis.startup.example.interfaces.PasswordService;
 import com.trevis.startup.example.interfaces.UserEntityService;
 import com.trevis.startup.example.repositories.UserRepository;
 
-@Service
 public class UserServiceDefault implements UserEntityService {
     
     @Autowired

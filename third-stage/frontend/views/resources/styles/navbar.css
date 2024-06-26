@@ -20,6 +20,10 @@ header {
     background-color: #e8d7f1;
 }
 
-main {
-    height: calc(100vh - 56px);
+.log-out{
+    color: rgb(202, 86, 125);
+}
+
+main{
+    min-height: calc(100vh - 56px);   
 }

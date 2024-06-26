@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
 
 import com.trevis.startup.example.dto.requests.ServiceCreationDto;
 import com.trevis.startup.example.entities.ServiceEntity;
@@ -16,7 +15,6 @@ import com.trevis.startup.example.interfaces.ServiceEntityService;
 import com.trevis.startup.example.interfaces.UserEntityService;
 import com.trevis.startup.example.repositories.ServiceRepository;
 
-@Service
 public class ServiceServiceDefault implements ServiceEntityService {
 
     @Autowired

@@ -3,7 +3,6 @@ package com.trevis.startup.example.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.trevis.startup.example.entities.DepartmentEntity;
 import com.trevis.startup.example.exceptions.NotFoundException;
@@ -11,7 +10,6 @@ import com.trevis.startup.example.interfaces.DepartmentEntityService;
 import com.trevis.startup.example.repositories.DepartmentRepository;
 
 
-@Service
 public class DepartamentServiceDefault implements DepartmentEntityService {
 
     @Autowired
