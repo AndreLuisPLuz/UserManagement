@@ -1,0 +1,62 @@
+.centered-panel {
+    height: 300px;
+    width: 500px;
+
+    background-color: #e8d7f1;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 20px;
+    border: dashed 2px #505a5b;
+}
+
+.login-form {
+    height: 100%;
+    width: 100%;
+
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.input {
+    width: 70%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.input > input[type="text"] , .input > input[type="password"] {
+    border-radius: 20px;
+    padding-left: 15px;
+
+    border: solid 1px #505a5b;
+}
+
+input[type="button"] {
+    padding-left: 15px;
+    padding-right: 15px;
+
+    background-color: #505a5b;
+    color: #fff;
+
+    border-radius: 20px;
+    border: solid 1px #505a5b;
+}
+
+@media screen and (max-width: 600px) {
+    .centered-panel {
+        height: 300px;
+        width: 280px;
+    }
+
+    .input {
+        width: 100%;
+    }
+}
