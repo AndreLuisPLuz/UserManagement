@@ -47,3 +47,27 @@ form{
 .buttons{
     padding-top: 10px;
 }
+
+@media screen and (max-width: 768px) {
+    .search-wrapper{
+        justify-content: center;
+        gap: 30px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .search-wrapper{
+        justify-content: center;
+    }
+    .search-bar{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .centered-panel-delete {
+        height: 250px;
+        width: 310px;
+        text-align: center;
+    }
+
+}

@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     justify-content: start;
-    gap: 30px;
+
     flex-wrap: wrap;
 
     width: 70%;
@@ -10,12 +10,17 @@
 }
 
 .card {
+    background-color: transparent;
+    margin: 1.5% 1.65%;
     min-height: 270px;
     width: 30%;
     min-width: 250px;
 
     border-radius: 10px;
     border: none;
+}
+.card-body{
+    background-color: #ffff;
 }
 
 .card-header , .card-footer {
@@ -51,4 +56,34 @@ a.btn {
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+
+
+
+@media screen and (max-width: 1024px) {
+    .card {    
+        width: 46%;
+        margin: 1.6% 1.65%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .card {    
+        width: 80%;
+    }
+    .card-deck {    
+        justify-content: center;
+    }
+}
+@media screen and (max-width: 600px) {
+    .card-deck {    
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .card {    
+        width: 100%;
+        margin: 7% 1.65%;
+    }
 }
