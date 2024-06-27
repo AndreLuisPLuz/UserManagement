@@ -1,6 +1,8 @@
-import data from  "../views/resources/temp/services.json";
-import departmentsData from "../views/resources/temp/departments.json";
-import usersData from "../views/resources/temp/users.json";
+import data from  "../views/resources/temp/services.json" with { type: "json" };
+import departmentsData from "../views/resources/temp/departments.json" with { type: "json" };
+import usersData from "../views/resources/temp/users.json" with { type: "json" };
+
+console.log(data);
 
 const renderServices = () => {
     const cardDeck = document.getElementById("service-card-deck");
