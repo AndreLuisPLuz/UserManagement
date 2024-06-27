@@ -8,10 +8,6 @@
     margin: 0;
 }
 
-/* header {
-    width: 100vw;
-} */
-
 .bg-rose {
     background-color: #e8d7f1;
 }
@@ -22,5 +18,9 @@
 
 .log-out{
     color: rgb(202, 86, 125);
+}
+
+main {
+    min-height: calc(100vh - 56px);
 }
 

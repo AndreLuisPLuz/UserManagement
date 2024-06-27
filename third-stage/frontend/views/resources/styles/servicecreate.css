@@ -1,0 +1,80 @@
+.centered-panel {
+    height: 450px;
+    width: 700px;
+
+    background-color: #e8d7f1;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 20px;
+    border: dashed 2px #505a5b;
+}
+
+.creation-form {
+    height: 100%;
+    width: 100%;
+
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.input {
+    width: 80%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.horizontal-input {
+    flex-direction: row;
+    gap: 10px;
+}
+
+.input > textarea {
+    resize: none;
+}
+
+.input > input[type="text"] , .input > textarea {
+    border-radius: 20px;
+    padding-left: 15px;
+
+    border: solid 1px #505a5b;
+}
+
+input[type="submit"] {
+    padding-left: 15px;
+    padding-right: 15px;
+
+    background-color: #505a5b;
+    color: #fff;
+
+    border-radius: 20px;
+    border: solid 1px #505a5b;
+}
+
+@media screen and (max-width: 768px) {
+    .centered-panel {
+        width: 500px;
+    }
+
+    .input {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .centered-panel {
+        width: 290px;
+    }
+
+    .input {
+        width: 100%;
+    }
+}

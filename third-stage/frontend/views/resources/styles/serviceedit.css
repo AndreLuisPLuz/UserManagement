@@ -1,0 +1,18 @@
+.close-edit-service{
+    border: none;
+    background-color: transparent;
+}
+
+.creation-form{
+    padding-top: 0px;
+}
+
+.modal-header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border: none;
+}
+.title-edit{
+    padding-left: 30%;
+}
