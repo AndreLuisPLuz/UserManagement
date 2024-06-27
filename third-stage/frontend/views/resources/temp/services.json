@@ -1,0 +1,52 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Programação ruim" ,
+            "description": "Vamos nos dedicar para fazer o pior aplicativo que não atenderá suas necessidades.",
+            "intern": false,
+            "departmentId": 1,
+            "managerId": 1
+        },
+        {
+            "id": 2,
+            "name": "Programação mediana" ,
+            "description": "Vamos fazer um aplicativo que cumpre metade do que você quer, e cobrar mais para implementar o resto.",
+            "intern": false,
+            "departmentId": 1,
+            "managerId": 1
+        },
+        {
+            "id": 3,
+            "name": "Programação boa" ,
+            "description": "Vamos criar um sistema que faz tudo que você precisa, resolve seus problemas, e é fácil de fazer manutenção.",
+            "intern": false,
+            "departmentId": 1,
+            "managerId": 1
+        },
+        {
+            "id": 4,
+            "name": "Programação excelente" ,
+            "description": "Seu programa vai resolver suas dores de cabeça, fazer café e sair pela metade do preço.",
+            "intern": false,
+            "departmentId": 1,
+            "managerId": 1
+        },
+        {
+            "id": 5,
+            "name": "Upgrade: servidor cloud" ,
+            "description": "Aprimora as funções base do sistema para incluir armazenamento em cloud. Não se preocupe mais com servidores locais!",
+            "intern": false,
+            "departmentId": 1,
+            "managerId": 1
+        },
+        {
+            "id": 6,
+            "name": "Upgrade: treinamento" ,
+            "description": "Vamos criar um módulo de treinamento e onboarding para seus funcionários não terem dificuldade em usar nossos sistemas.",
+            "intern": false,
+            "departmentId": 1,
+            "managerId": 1
+        }
+    ]
+}

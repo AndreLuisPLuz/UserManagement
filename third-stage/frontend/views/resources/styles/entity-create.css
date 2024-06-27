@@ -41,7 +41,7 @@
     resize: none;
 }
 
-.input > input[type="text"] , .input > textarea {
+.input > input[type="text"] , .input > textarea , .input > select {
     border-radius: 20px;
     padding-left: 15px;
 
