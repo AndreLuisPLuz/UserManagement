@@ -21,3 +21,29 @@ form{
     flex-wrap: wrap;
     gap: 50px;
 }
+
+.centered-panel-delete {
+    height: 200px;
+    width: 700px;
+
+    background-color: #e8d7f1;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 20px;
+    border: dashed 2px #505a5b;
+}
+
+.delete-form{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttons{
+    padding-top: 10px;
+}
