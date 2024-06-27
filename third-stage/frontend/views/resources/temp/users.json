@@ -1,0 +1,10 @@
+{
+    "data": [
+        {
+            "username": "André",
+            "role": 2,
+            "id": 1,
+            "departmentId": 1
+        }
+    ]
+}
