@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="./resources/styles/navbar.css">
   <link rel="stylesheet" href="./resources/styles/service-card.css">
   <link rel="stylesheet" href="./resources/styles/services-list.css">
-  <link rel="stylesheet" href="./resources/styles/servicecreate.css">
+  <link rel="stylesheet" href="./resources/styles/entity-create.css">
   <link rel="stylesheet" href="./resources/styles/serviceedit.css">
   <title>Trevis Manager</title>
 </head>
@@ -154,7 +154,27 @@
         <button type="submit" class="btn btn-primary">Buscar</button>
       </form>
     </div>
-    <div class="card-deck text-center" id="service-card-deck">
+
+    <div class="card-deck text-center">
+      <div class="card card-dash border-light">
+        <div class="card-header">
+          <h4 class="m-0 pt-1 pb-1">$serviceName</h4>
+        </div>
+        <div class="card-body">
+          <div class="card-content-wrapper">
+            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione sapiente inventore velit eligendi.
+              Officia dolore exercitationem.</span>
+            <span class="poppins-medium">$managerName</span>
+            <span class="poppins-medium">$departmentName</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-primary" href="#" role="button" data-bs-toggle="modal"
+            data-bs-target="#editServiceModel">Editar</a>
+          <a class="btn btn-danger" href="#" role="button" data-bs-toggle="modal"
+          data-bs-target="#deleteServiceModal">Excluir</a>
+        </div>
+      </div>
     </div>
 
     <nav aria-label="Page navigation example">

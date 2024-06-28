@@ -3,9 +3,6 @@
     background-color: transparent;
 }
 
-.creation-form{
-    padding-top: 0px;
-}
 
 .modal-header{
     width: 100%;
@@ -15,4 +12,13 @@
 }
 .title-edit{
     padding-left: 30%;
+}
+
+@media screen and (max-width: 425px) {
+    .title-edit{
+        padding-left: 0%;
+    }
+    .modal-header{
+        padding: 0px;
+    }
 }
