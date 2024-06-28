@@ -32,7 +32,8 @@
     flex-direction: column;
 }
 
-.input > input[type="text"] , .input > input[type="password"] {
+.input>input[type="text"],
+.input>input[type="password"] {
     border-radius: 20px;
     padding-left: 15px;
 
@@ -48,6 +49,31 @@ input[type="submit"] {
 
     border-radius: 20px;
     border: solid 1px #505a5b;
+}
+
+#message{
+    color: white;
+}
+.alert {
+    display: none;
+    padding: 20px;
+    background-color: #ff4639;
+
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
 }
 
 @media screen and (max-width: 600px) {

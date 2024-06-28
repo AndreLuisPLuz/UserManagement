@@ -1,7 +1,15 @@
 {
     "data": [
         {
-            "username": "André",
+            "username": "Andre",
+            "password": "Ets@Bosch2024",
+            "role": 2,
+            "id": 1,
+            "departmentId": 1
+        },
+        {
+            "username": "admin",
+            "password": "admin",
             "role": 2,
             "id": 1,
             "departmentId": 1

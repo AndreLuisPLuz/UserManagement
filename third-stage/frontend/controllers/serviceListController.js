@@ -25,8 +25,8 @@ const renderServices = () => {
                 </div>
                 </div>
                 <div class="card-footer">
-                <a class="btn btn-primary" href="#" role="button">Editar</a>
-                <a class="btn btn-danger" href="#" role="button">Excluir</a>
+                <a class="btn btn-primary" href="#" role="button" data-bs-toggle="modal" data-bs-target="#editServiceModel" >Editar</a>
+                <a class="btn btn-danger" href="#" role="button" data-bs-toggle="modal" data-bs-target="#deleteServiceModal">Excluir</a>
                 </div>
             </div>`
         );
