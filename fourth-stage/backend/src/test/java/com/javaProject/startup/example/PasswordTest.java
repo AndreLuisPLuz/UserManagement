@@ -15,8 +15,10 @@ class PasswordTest {
 
     @Test
     public void applyCryptographyTest() {
-       String passwordACT = "123pwdets";
-       String encryptedPwd = pwd.applyCryptography(passwordACT);
+        String passwordACT = "123pwdets";
+        String encryptedPwd = assertDoesNotThrow(() -> 
+            pwd.applyCryptography(passwordACT)
+        );
 
        assertNotEquals(passwordACT, encryptedPwd);
     }	
@@ -24,9 +26,13 @@ class PasswordTest {
     @Test
     public void verifyCriptographyTest() {
         String passwordVCT = "123pwdets";
-        String encryptedPwd = pwd.applyCryptography(passwordVCT);
+        String encryptedPwd = assertDoesNotThrow(() -> 
+            pwd.applyCryptography(passwordVCT)
+        );
 
-        Boolean isCorrect = pwd.verifyCriptography(passwordVCT, encryptedPwd);
+        Boolean isCorrect = assertDoesNotThrow(() -> 
+        pwd.verifyCriptography(passwordVCT, encryptedPwd)
+        );
 
         assertTrue(isCorrect);
     }	

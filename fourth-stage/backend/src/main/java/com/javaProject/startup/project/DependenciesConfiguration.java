@@ -13,6 +13,7 @@ import com.javaProject.startup.project.impl.DefaultJWTService;
 import com.javaProject.startup.project.impl.DefaultPasswordService;
 import com.javaProject.startup.project.impl.DefaultServiceService;
 import com.javaProject.startup.project.impl.DefaultUserService;
+import com.javaProject.startup.project.impl.PBKDF2PasswordService;
 import com.javaProject.startup.project.impl.RS256SignatureService;
 import com.javaProject.startup.project.impl.RSAKeyService;
 import com.javaProject.startup.project.impl.SHA256HashService;
@@ -53,7 +54,7 @@ public class DependenciesConfiguration {
     @Bean
     @Scope("singleton")
     PasswordService passwordService(){
-        return new DefaultPasswordService();
+        return new PBKDF2PasswordService();
     }
 
     @Bean

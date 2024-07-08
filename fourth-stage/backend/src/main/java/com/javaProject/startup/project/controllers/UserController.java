@@ -96,7 +96,11 @@ public class UserController {
     }
 
     @PatchMapping("/user/{id}")
-    public ResponseEntity<String> updatePassword(@RequestBody String pass, @PathVariable Long id, @RequestHeader("authorization") String jwt) {
+    public ResponseEntity<String> updatePassword(
+            @RequestBody String password,
+            @PathVariable Long id,
+            @RequestHeader("authorization") String jwt
+    ) {
         Map<String, Object> auth = jwtService.validate(jwt);
         if(auth == null) {
             return new ResponseEntity<>(
@@ -122,7 +126,7 @@ public class UserController {
             );
         }
 
-        if(!userService.updatePassword(id, pass)){
+        if(!userService.updatePassword(id, password)){
             return new ResponseEntity<>(
                 "Failed to update password :/", 
                 HttpStatus.BAD_REQUEST

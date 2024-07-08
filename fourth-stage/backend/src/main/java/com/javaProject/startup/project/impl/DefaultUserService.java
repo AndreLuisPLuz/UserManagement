@@ -2,6 +2,7 @@ package com.javaProject.startup.project.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.javaProject.startup.project.exceptions.BadHashConfigurationException;
 import com.javaProject.startup.project.model.Department;
 import com.javaProject.startup.project.model.UserData;
 import com.javaProject.startup.project.repositories.UserRepository;
@@ -38,7 +39,12 @@ public class DefaultUserService implements UserService {
         user.setUsername(username);
         user.setDepartment(department);
         user.setRole(role);
-        user.setPassword(passService.applyCryptography(username));
+
+        try {
+            user.setPassword(passService.applyCryptography(username));
+        } catch (BadHashConfigurationException ex) {
+            return null;
+        }
 
         return user;
     }
@@ -56,7 +62,11 @@ public class DefaultUserService implements UserService {
         }
 
         UserData actualUser = (UserData) user.get();
-        actualUser.setPassword(passService.applyCryptography(newPassword));
+        try{
+            actualUser.setPassword(passService.applyCryptography(newPassword));
+        } catch (BadHashConfigurationException ex) {
+            return null;
+        }
         userRepo.save(actualUser);
 
         return true;

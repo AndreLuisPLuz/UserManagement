@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.javaProject.startup.project.dto.AuthToken;
 import com.javaProject.startup.project.dto.JWTUserData;
+import com.javaProject.startup.project.exceptions.BadHashConfigurationException;
 import com.javaProject.startup.project.model.UserData;
 import com.javaProject.startup.project.repositories.UserRepository;
 import com.javaProject.startup.project.services.AuthService;
@@ -35,8 +36,17 @@ public class DefaultAuthService implements AuthService {
                 HttpStatus.NOT_FOUND
             );
         }
+
+        Boolean passwordMatches;
+        try {
+            passwordMatches = passService.verifyCriptography(password, user.getPassword());
+        } catch(BadHashConfigurationException ex) {
+            return ResponseEntity.badRequest().body(
+                new AuthToken("Password didn't match.", null)
+            );
+        }
         
-        if(!passService.verifyCriptography(password, user.getPassword())) {
+        if(!passwordMatches) {
             return new ResponseEntity<AuthToken>(
                 new AuthToken(
                     "Incorrect password :/",
