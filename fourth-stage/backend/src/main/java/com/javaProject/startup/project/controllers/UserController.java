@@ -46,22 +46,22 @@ public class UserController {
 
     @PostMapping("/user") 
     public ResponseEntity<AuthToken> registerUser(@RequestBody RegisterUserData obj, @RequestHeader("authorization") String jwt) {
-        Map<String, Object> auth = jwtService.validate(jwt);
-        if(auth == null) {
-            return new ResponseEntity<AuthToken>(
-                new AuthToken(
-                    "Failed authentication :/",
-                    null), 
-                HttpStatus.UNAUTHORIZED);
-        }
+        // Map<String, Object> auth = jwtService.validate(jwt);
+        // if(auth == null) {
+        //     return new ResponseEntity<AuthToken>(
+        //         new AuthToken(
+        //             "Failed authentication :/",
+        //             null), 
+        //         HttpStatus.UNAUTHORIZED);
+        // }
 
-        if((Integer) auth.get("role") != 0){
-            return new ResponseEntity<AuthToken>(
-                new AuthToken(
-                    "User does not have permission to execute such task :/",
-                    null), 
-                HttpStatus.FORBIDDEN);
-        }
+        // if((Integer) auth.get("role") != 0){
+        //     return new ResponseEntity<AuthToken>(
+        //         new AuthToken(
+        //             "User does not have permission to execute such task :/",
+        //             null), 
+        //         HttpStatus.FORBIDDEN);
+        // }
 
         var department = departmentRepository.findById(obj.department());
         if(!department.isPresent()) {
@@ -101,21 +101,21 @@ public class UserController {
             @PathVariable Long id,
             @RequestHeader("authorization") String jwt
     ) {
-        Map<String, Object> auth = jwtService.validate(jwt);
-        if(auth == null) {
-            return new ResponseEntity<>(
-                "Failed to authenticate :/", 
-                HttpStatus.UNAUTHORIZED
-            );
-        }
+        // Map<String, Object> auth = jwtService.validate(jwt);
+        // if(auth == null) {
+        //     return new ResponseEntity<>(
+        //         "Failed to authenticate :/", 
+        //         HttpStatus.UNAUTHORIZED
+        //     );
+        // }
         
-        Integer jwtId = (Integer)auth.get("id");
-        if(jwtId != id.intValue()) {
-            return new ResponseEntity<>(
-                "Failed to authenticate :/", 
-                HttpStatus.FORBIDDEN
-            );
-        }
+        // Integer jwtId = (Integer)auth.get("id");
+        // if(jwtId != id.intValue()) {
+        //     return new ResponseEntity<>(
+        //         "Failed to authenticate :/", 
+        //         HttpStatus.FORBIDDEN
+        //     );
+        // }
 
         var user = userRepository.findById(id);
 

@@ -31,7 +31,7 @@ public class DefaultUserService implements UserService {
             return null;
         }
 
-        if(userRepo.findByUsername(username).size() > 0) {
+        if(userRepo.findByUsernameContaining(username).size() > 0) {
             return null;
         }
 

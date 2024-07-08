@@ -18,7 +18,18 @@ public class AuthController {
 
     @PostMapping("/auth")
     public ResponseEntity<AuthToken> tryLogin(@RequestBody LoginData obj) {
-        return authService.login(obj.login(), obj.password());
+        AuthToken result;
+
+        try {
+            result = authService.login(obj.login(), obj.password());
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(
+                new AuthToken("Tentativa de login incorreta", null)
+            );
+        }
+
+        System.out.println(result);
+        return ResponseEntity.ok().body(result);
     }
 
     // ..nao esta implementado o retorno do erro ser no login/password..

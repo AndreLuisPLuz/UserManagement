@@ -3,10 +3,13 @@ package com.javaProject.startup.project;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.annotation.RequestScope;
 
 import com.javaProject.startup.project.dto.JWTUserData;
+import com.javaProject.startup.project.impl.Auth0JwtService;
 import com.javaProject.startup.project.impl.DefaultAuthService;
 import com.javaProject.startup.project.impl.DefaultDepartmentService;
 import com.javaProject.startup.project.impl.DefaultJWTService;
@@ -58,9 +61,9 @@ public class DependenciesConfiguration {
     }
 
     @Bean
-    @Scope("singleton")
+    @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
     AuthService authService(){
-        return new DefaultAuthService();
+        return new Auth0JwtService();
     }
 
     @Bean

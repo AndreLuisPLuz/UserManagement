@@ -71,7 +71,8 @@ public class PBKDF2PasswordService implements PasswordService {
         } catch (InvalidKeySpecException ex) {
             throw new BadHashConfigurationException("Generated hash was invalid, likely due to bad configuration of the hasher.");
         }
-
+        System.out.println(signature);
+        System.out.println(validationSignature);
         return Arrays.equals(signature, validationSignature);
     }
 

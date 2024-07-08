@@ -9,6 +9,5 @@ import com.javaProject.startup.project.model.UserData;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserData, Long> {
-
-    public List<UserData> findByUsername(String username);
+    List<UserData> findByUsernameContaining(String search);
 }
