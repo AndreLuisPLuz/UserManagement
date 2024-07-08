@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,10 +48,7 @@ public class ServiceController {
     public ResponseEntity<List<Service>> getService(@RequestParam String query, @RequestParam Integer page, @RequestParam Integer size, @RequestHeader("authorization") String jwt) {
         Map<String, Object> auth = jwtService.validate(jwt);
         if(auth == null) {
-            return new ResponseEntity<>(
-                null, 
-                HttpStatus.UNAUTHORIZED
-            );
+            return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
         }
         
         return new ResponseEntity<List<Service>>(

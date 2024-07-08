@@ -21,7 +21,7 @@ public class DefaultAuthService implements AuthService {
     PasswordService passService;
 
     @Autowired
-    JWTService jwtService;
+    JWTService<JWTUserData> jwtService;
 
     @Override
     public ResponseEntity<AuthToken> login(String username, String password) {

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.javaProject.startup.project.dto.JWTUserData;
 import com.javaProject.startup.project.impl.DefaultAuthService;
 import com.javaProject.startup.project.impl.DefaultDepartmentService;
 import com.javaProject.startup.project.impl.DefaultJWTService;
@@ -14,8 +15,8 @@ import com.javaProject.startup.project.impl.RS256SignatureService;
 import com.javaProject.startup.project.impl.RSAKeyService;
 import com.javaProject.startup.project.impl.SHA256HashService;
 import com.javaProject.startup.project.impl.SHAPasswordEncoder;
-import com.javaProject.startup.project.impl.mock.MockDepartmentService;
-import com.javaProject.startup.project.impl.mock.MockServicesService;
+// import com.javaProject.startup.project.impl.mock.MockDepartmentService;
+// import com.javaProject.startup.project.impl.mock.MockServicesService;
 import com.javaProject.startup.project.services.AuthService;
 import com.javaProject.startup.project.services.DepartmentService;
 import com.javaProject.startup.project.services.HashService;
@@ -55,7 +56,7 @@ public class DependenciesConfiguration {
     }
 
     @Bean
-    JWTService jwtService(){
+    JWTService<JWTUserData> jwtService(){
         return new DefaultJWTService<>();
     }
 
