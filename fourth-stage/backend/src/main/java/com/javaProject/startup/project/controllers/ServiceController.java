@@ -2,6 +2,7 @@ package com.javaProject.startup.project.controllers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javaProject.startup.project.dto.JWTUserData;
 import com.javaProject.startup.project.dto.PostServiceData;
+import com.javaProject.startup.project.dto.ServiceDto;
 import com.javaProject.startup.project.model.Service;
 import com.javaProject.startup.project.model.UserData;
 import com.javaProject.startup.project.repositories.ServiceRepository;
@@ -32,7 +35,7 @@ public class ServiceController {
     ServiceService serviceService;
 
     @Autowired
-    JWTService<PostServiceData> jwtService;
+    JWTService<JWTUserData> jwtService;
 
     @Autowired
     UserRepository userRepo;
@@ -45,7 +48,7 @@ public class ServiceController {
     //por não ter serviço cadastrado, e o resto não conseguimos testar
 
     @GetMapping("/service")
-    public ResponseEntity<List<Service>> getService(
+    public ResponseEntity<List<ServiceDto>> getService(
             @RequestParam String query,
             @RequestParam Integer page,
             @RequestParam Integer size,
@@ -54,11 +57,13 @@ public class ServiceController {
         if(auth == null) {
             return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
         }
+
+        var matchingServices = serviceService.get(query, page, size);
+        var result = matchingServices.stream()
+            .map(s -> ServiceDto.buildFromEntity(s))
+            .collect(Collectors.toList());
         
-        return new ResponseEntity<List<Service>>(
-            serviceService.get(query, page, size), 
-            HttpStatus.OK
-        );
+        return ResponseEntity.ok().body(result);
     }
     
     @PostMapping("/service") 
@@ -82,7 +87,7 @@ public class ServiceController {
             );
         }
 
-        Long id = (Long) auth.get("id");
+        Long id = Long.parseLong(auth.get("id").toString());
         var user = userRepo.findById(id);
 
         if(!user.isPresent()) {
@@ -96,7 +101,7 @@ public class ServiceController {
         newService.setName(obj.name());
         newService.setDescription(obj.description());
         newService.setIntern(obj.intern());
-        newService.setManagerId((UserData) user.get());
+        newService.setManager((UserData) user.get());
 
         serviceRepo.save(newService);
 
@@ -126,7 +131,7 @@ public class ServiceController {
             );
         }
 
-        if(!(service.get().getManagerId() == auth.get("id"))) {
+        if(!(service.get().getManager() == auth.get("id"))) {
             return new ResponseEntity<>(
                 "User does not have permission to execute such task :/", 
                 HttpStatus.FORBIDDEN
@@ -165,7 +170,7 @@ public class ServiceController {
             );
         }
 
-        if(!(service.get().getManagerId() == auth.get("id"))) {
+        if(!(service.get().getManager() == auth.get("id"))) {
             return new ResponseEntity<>(
                 "User does not have permission to execute such task :/", 
                 HttpStatus.FORBIDDEN

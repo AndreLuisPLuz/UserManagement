@@ -52,13 +52,13 @@ public class Service {
 
     @OneToOne()
     @JoinColumn(name="ManagerId", referencedColumnName="Id")
-    public UserData managerId;
+    public UserData manager;
 
-    public UserData getManagerId() {
-        return managerId;
+    public UserData getManager() {
+        return manager;
     }
 
-    public void setManagerId(UserData managerId) {
-        this.managerId = managerId;
+    public void setManager(UserData managerId) {
+        this.manager = managerId;
     }
 }

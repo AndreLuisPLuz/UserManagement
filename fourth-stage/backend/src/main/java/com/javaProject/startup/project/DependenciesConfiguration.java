@@ -2,7 +2,9 @@ package com.javaProject.startup.project;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.context.annotation.RequestScope;
 
 import com.javaProject.startup.project.dto.JWTUserData;
 import com.javaProject.startup.project.impl.DefaultAuthService;
@@ -31,51 +33,61 @@ import com.javaProject.startup.project.services.UserService;
 public class DependenciesConfiguration {
 
     @Bean
+    @Scope("singleton")
     DepartmentService departamentService(){
         return new DefaultDepartmentService();
     }
 
     @Bean
+    @Scope("singleton")
     UserService userService(){
         return new DefaultUserService();
     }
 
     @Bean
+    @Scope("singleton")
     ServiceService serviceService(){
         return new DefaultServiceService();
     }
 
     @Bean
+    @Scope("singleton")
     PasswordService passwordService(){
         return new DefaultPasswordService();
     }
 
     @Bean
+    @Scope("singleton")
     AuthService authService(){
         return new DefaultAuthService();
     }
 
     @Bean
+    @RequestScope
     JWTService<JWTUserData> jwtService(){
         return new DefaultJWTService<>();
     }
 
     @Bean
+    @Scope("singleton")
     KeyService keyService(){
         return new RSAKeyService();
     }
 
     @Bean
+    @Scope("singleton")
     HashService hashService(){
         return new SHA256HashService();
     }
 
     @Bean
+    @Scope("singleton")
     SignatureService signatureService(){
         return new RS256SignatureService();
     }
 
     @Bean
+    @Scope("singleton")
     PasswordEncoder passwordEncoder() {
         return new SHAPasswordEncoder();
     }
