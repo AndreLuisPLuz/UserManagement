@@ -45,7 +45,11 @@ public class ServiceController {
     //por não ter serviço cadastrado, e o resto não conseguimos testar
 
     @GetMapping("/service")
-    public ResponseEntity<List<Service>> getService(@RequestParam String query, @RequestParam Integer page, @RequestParam Integer size, @RequestHeader("authorization") String jwt) {
+    public ResponseEntity<List<Service>> getService(
+            @RequestParam String query,
+            @RequestParam Integer page,
+            @RequestParam Integer size,
+            @RequestHeader("authorization") String jwt) {
         Map<String, Object> auth = jwtService.validate(jwt);
         if(auth == null) {
             return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
@@ -58,7 +62,9 @@ public class ServiceController {
     }
     
     @PostMapping("/service") 
-    public ResponseEntity<String> registerService(@RequestBody PostServiceData obj, @RequestHeader("authorization") String jwt) {
+    public ResponseEntity<String> registerService(
+            @RequestBody PostServiceData obj,
+            @RequestHeader("authorization") String jwt) {
         Map<String, Object> auth = jwtService.validate(jwt);
 
         if(auth == null) {
