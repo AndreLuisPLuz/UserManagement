@@ -18,6 +18,7 @@ import com.javaProject.startup.project.dto.RegisterUserData;
 import com.javaProject.startup.project.model.UserData;
 import com.javaProject.startup.project.repositories.DepartmentRepository;
 import com.javaProject.startup.project.repositories.UserRepository;
+import com.javaProject.startup.project.services.AuthService;
 import com.javaProject.startup.project.services.DepartmentService;
 import com.javaProject.startup.project.services.JWTService;
 import com.javaProject.startup.project.services.PasswordService;
@@ -36,7 +37,7 @@ public class UserController {
     DepartmentRepository departmentRepository;
     
     @Autowired
-    JWTService<JWTUserData> jwtService;
+    AuthService authService;
 
     @Autowired
     UserService userService;
