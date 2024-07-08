@@ -17,10 +17,10 @@ import com.javaProject.startup.project.impl.DefaultPasswordService;
 import com.javaProject.startup.project.impl.DefaultServiceService;
 import com.javaProject.startup.project.impl.DefaultUserService;
 import com.javaProject.startup.project.impl.PBKDF2PasswordService;
-import com.javaProject.startup.project.impl.RS256SignatureService;
-import com.javaProject.startup.project.impl.RSAKeyService;
-import com.javaProject.startup.project.impl.SHA256HashService;
-import com.javaProject.startup.project.impl.SHAPasswordEncoder;
+// import com.javaProject.startup.project.impl.RS256SignatureService;
+// import com.javaProject.startup.project.impl.RSAKeyService;
+// import com.javaProject.startup.project.impl.SHA256HashService;
+// import com.javaProject.startup.project.impl.SHAPasswordEncoder;
 // import com.javaProject.startup.project.impl.mock.MockDepartmentService;
 // import com.javaProject.startup.project.impl.mock.MockServicesService;
 import com.javaProject.startup.project.services.AuthService;
@@ -61,7 +61,7 @@ public class DependenciesConfiguration {
     }
 
     @Bean
-    @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
+    @Scope("singleton")
     AuthService authService(){
         return new Auth0JwtService();
     }
@@ -72,29 +72,29 @@ public class DependenciesConfiguration {
         return new DefaultJWTService<>();
     }
 
-    @Bean
-    @Scope("singleton")
-    KeyService keyService(){
-        return new RSAKeyService();
-    }
+    // @Bean
+    // @Scope("singleton")
+    // KeyService keyService(){
+    //     return new RSAKeyService();
+    // }
 
-    @Bean
-    @Scope("singleton")
-    HashService hashService(){
-        return new SHA256HashService();
-    }
+    // @Bean
+    // @Scope("singleton")
+    // HashService hashService(){
+    //     return new SHA256HashService();
+    // }
 
-    @Bean
-    @Scope("singleton")
-    SignatureService signatureService(){
-        return new RS256SignatureService();
-    }
+    // @Bean
+    // @Scope("singleton")
+    // SignatureService signatureService(){
+    //     return new RS256SignatureService();
+    // }
 
-    @Bean
-    @Scope("singleton")
-    PasswordEncoder passwordEncoder() {
-        return new SHAPasswordEncoder();
-    }
+    // @Bean
+    // @Scope("singleton")
+    // PasswordEncoder passwordEncoder() {
+    //     return new SHAPasswordEncoder();
+    // }
 
     // @Bean
     // MockUserService mockUserService() {
