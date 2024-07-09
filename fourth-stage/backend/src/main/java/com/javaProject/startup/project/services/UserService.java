@@ -7,4 +7,5 @@ public interface UserService {
     UserData create(String username, Department department, Integer role);
     Boolean updatePassword(Long id, String newPassword);
     UserData get(String username);
+    UserData getById(Long id);
 }

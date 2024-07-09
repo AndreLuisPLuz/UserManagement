@@ -64,7 +64,6 @@ public class Auth0JwtService implements AuthService {
         UserData user = matchingUsers.get(0);
         
         if (!passwordService.verifyCriptography(password, user.getPassword())) {
-            System.out.println(user.getUsername());
             return null;
         }
 

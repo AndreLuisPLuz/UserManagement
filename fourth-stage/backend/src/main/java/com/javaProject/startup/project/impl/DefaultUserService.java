@@ -51,9 +51,9 @@ public class DefaultUserService implements UserService {
 
     @Override
     public Boolean updatePassword(Long id, String newPassword) {
-        var user = userRepo.findById(id);
+        var userFetch = userRepo.findById(id);
 
-        if(!user.isPresent()) {
+        if(!userFetch.isPresent()) {
             return false;
         }
 
@@ -61,20 +61,25 @@ public class DefaultUserService implements UserService {
             return false;
         }
 
-        UserData actualUser = (UserData) user.get();
+        UserData user = userFetch.get();
         try{
-            actualUser.setPassword(passService.applyCryptography(newPassword));
+            user.setPassword(passService.applyCryptography(newPassword));
         } catch (BadHashConfigurationException ex) {
-            return null;
+            return false;
         }
-        userRepo.save(actualUser);
 
-        return true;
+        var savedUser = userRepo.save(user);
+
+        return (savedUser != null);
     }
 
     @Override
     public UserData get(String username) {
         throw new UnsupportedOperationException("Unimplemented method 'Get'");
     }
-    
+
+    @Override
+    public UserData getById(Long id) {
+        return userRepo.getReferenceById(id);
+    }
 }

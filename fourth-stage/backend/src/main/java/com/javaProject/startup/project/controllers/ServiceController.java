@@ -1,12 +1,10 @@
 package com.javaProject.startup.project.controllers;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,30 +16,28 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javaProject.startup.project.dto.JWTUserData;
 import com.javaProject.startup.project.dto.PostServiceData;
 import com.javaProject.startup.project.dto.ServiceDto;
 import com.javaProject.startup.project.model.Service;
-import com.javaProject.startup.project.model.UserData;
 import com.javaProject.startup.project.repositories.ServiceRepository;
-import com.javaProject.startup.project.repositories.UserRepository;
-import com.javaProject.startup.project.services.JWTService;
 import com.javaProject.startup.project.services.ServiceService;
+import com.javaProject.startup.project.services.UserService;
+import com.javaProject.startup.project.sessions.UserSession;
 
 @RestController
 public class ServiceController {
 
     @Autowired
     ServiceService serviceService;
-
-    @Autowired
-    JWTService<JWTUserData> jwtService;
-
-    @Autowired
-    UserRepository userRepo;
     
     @Autowired
     ServiceRepository serviceRepo;
+
+    @Autowired
+    UserSession userSession;
+
+    @Autowired
+    UserService userService;
 
     //..Tem que mudar a forma de criptografia das senhas, pois não está funcionando quando dá update na senha
     //De modo que não conseguimos fazer os testes das rotas do serviço, o get service conseguimos uma lista vazia
@@ -52,12 +48,8 @@ public class ServiceController {
             @RequestParam String query,
             @RequestParam Integer page,
             @RequestParam Integer size,
-            @RequestHeader("authorization") String jwt) {
-        Map<String, Object> auth = jwtService.validate(jwt);
-        if(auth == null) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
-        }
-
+            @RequestHeader("authorization") String jwt
+    ) {
         var matchingServices = serviceService.get(query, page, size);
         var result = matchingServices.stream()
             .map(s -> ServiceDto.buildFromEntity(s))
@@ -69,17 +61,18 @@ public class ServiceController {
     @PostMapping("/service") 
     public ResponseEntity<String> registerService(
             @RequestBody PostServiceData obj,
-            @RequestHeader("authorization") String jwt) {
-        Map<String, Object> auth = jwtService.validate(jwt);
+            @RequestHeader("authorization") String jwt
+    ) {
+        var requestingUser = userService.getById(userSession.getId());
 
-        if(auth == null) {
+        if(requestingUser == null) {
             return new ResponseEntity<>(
-                "Failed authentication :/", 
-                HttpStatus.UNAUTHORIZED
+                "Session expired :/", 
+                HttpStatus.BAD_REQUEST
             );
         }
 
-        Integer role = (Integer) auth.get("role");
+        var role = requestingUser.getRole();
         if(role.intValue() != 1){
             return new ResponseEntity<>(
                 "User does not have permission to execute such task :/", 
@@ -87,21 +80,11 @@ public class ServiceController {
             );
         }
 
-        Long id = Long.parseLong(auth.get("id").toString());
-        var user = userRepo.findById(id);
-
-        if(!user.isPresent()) {
-            return new ResponseEntity<>(
-                "Session expired :/", 
-                HttpStatus.BAD_REQUEST
-            );
-        }
-
         Service newService = new Service();
         newService.setName(obj.name());
         newService.setDescription(obj.description());
         newService.setIntern(obj.intern());
-        newService.setManager((UserData) user.get());
+        newService.setManager(requestingUser);
 
         serviceRepo.save(newService);
 
@@ -112,17 +95,14 @@ public class ServiceController {
     }
 
     @PutMapping("/service/{id}")
-    public ResponseEntity<String> updateService(@RequestBody PostServiceData obj, @PathVariable Long id, @RequestHeader("authorization") String jwt) {
-        Map<String, Object> auth = jwtService.validate(jwt);
-
-        if(auth == null) {
-            return new ResponseEntity<>(
-                "Failed authentication :/", 
-                HttpStatus.UNAUTHORIZED
-            );
-        }
-
+    public ResponseEntity<String> updateService(
+            @RequestBody PostServiceData obj,
+            @PathVariable Long id,
+            @RequestHeader("authorization") String jwt
+    ) {
         var service = serviceRepo.findById(id);
+        var canUserUpdate = service.get()
+            .getManager().getId() == userSession.getId();
 
         if(!service.isPresent()) {
             return new ResponseEntity<>(
@@ -131,7 +111,7 @@ public class ServiceController {
             );
         }
 
-        if(!(service.get().getManager() == auth.get("id"))) {
+        if (!canUserUpdate) {
             return new ResponseEntity<>(
                 "User does not have permission to execute such task :/", 
                 HttpStatus.FORBIDDEN
@@ -152,16 +132,9 @@ public class ServiceController {
 
     @DeleteMapping("/service/{id}")
     public ResponseEntity<String> deleteService(@PathVariable Long id, @RequestHeader("authorization") String jwt) {
-        Map<String, Object> auth = jwtService.validate(jwt);
-
-        if(auth == null) {
-            return new ResponseEntity<>(
-                "Failed authentication :/", 
-                HttpStatus.UNAUTHORIZED
-            );
-        }
-
         var service = serviceRepo.findById(id);
+        var canUserUpdate = service.get()
+            .getManager().getId() == userSession.getId();
 
         if(!service.isPresent()) {
             return new ResponseEntity<>(
@@ -170,7 +143,7 @@ public class ServiceController {
             );
         }
 
-        if(!(service.get().getManager() == auth.get("id"))) {
+        if(!canUserUpdate) {
             return new ResponseEntity<>(
                 "User does not have permission to execute such task :/", 
                 HttpStatus.FORBIDDEN
@@ -180,8 +153,8 @@ public class ServiceController {
         serviceRepo.delete(service.get());
 
         return new ResponseEntity<>(
-                "Service deleted successfully", 
-                HttpStatus.OK
-            );
+            "Service deleted successfully", 
+            HttpStatus.OK
+        );
     }
 }

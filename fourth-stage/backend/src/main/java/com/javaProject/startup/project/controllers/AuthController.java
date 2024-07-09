@@ -28,7 +28,10 @@ public class AuthController {
             );
         }
 
-        System.out.println(result);
+        if (result == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         return ResponseEntity.ok().body(result);
     }
 
