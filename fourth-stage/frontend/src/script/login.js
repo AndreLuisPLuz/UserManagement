@@ -28,10 +28,10 @@ const doLogin = async() => {
     const data = await response.json();
     localStorage.setItem("token", data.token);
 
-    if (username == password)
-        window.location.href = "http://localhost:5500/frontend/src/views/password.html";
-    else
-        window.location.href = "http://localhost:5500/frontend/src/index.html";
+    // if (username == password)
+    window.location.href = "./password.html";
+    // else
+    //     window.location.href = "../";
 }
 
 form.addEventListener("submit", e => {
@@ -39,3 +39,6 @@ form.addEventListener("submit", e => {
 })
 
 button.addEventListener("click", doLogin);
+
+
+

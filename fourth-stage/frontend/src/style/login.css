@@ -137,3 +137,11 @@ div {
   display: none;
   color: #d63826;
 }
+
+#error-message{
+  display: none;
+  color: white;
+  height: 30px;
+  border-radius: 10px;
+  padding: 0px 10px;
+}
