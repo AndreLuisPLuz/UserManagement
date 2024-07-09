@@ -126,3 +126,14 @@ div {
   color: #fff;
   background-color: rgb(64, 139, 83);
 }
+
+.bottom-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#error-message {
+  display: none;
+  color: #d63826;
+}
